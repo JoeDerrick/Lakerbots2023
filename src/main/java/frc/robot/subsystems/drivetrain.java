@@ -9,8 +9,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
-import com.ctre.phoenix.sensors.Pigeon2;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -19,6 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.sensors.Pigeon2;
 
 
 public class drivetrain extends SubsystemBase {
@@ -43,7 +42,6 @@ public class drivetrain extends SubsystemBase {
         zeroGyro();
 
     
-
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
             new SwerveModule(1, Constants.Swerve.Mod1.constants),
@@ -127,9 +125,6 @@ public class drivetrain extends SubsystemBase {
             mod.resetToAbsolute();
         }
     }
-
-
-
 
     @Override
     public void periodic(){

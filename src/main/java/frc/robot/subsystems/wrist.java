@@ -141,7 +141,7 @@ m_Encoder = wristMotor.getEncoder();
         setPoint = setPoint;
         m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
     }
-    public void wristMoveHome(){
+    /*public void wristMoveHome(){
         setPoint = WristHome;
         m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
     }
@@ -151,6 +151,10 @@ m_Encoder = wristMotor.getEncoder();
     }
     public void wristMoveBack(){
         setPoint = WristBack;
+        m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
+    }*/
+    public void wristGoToPosition(Double position){
+        setPoint = position;
         m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
     }
     public double wristGetPosition(){

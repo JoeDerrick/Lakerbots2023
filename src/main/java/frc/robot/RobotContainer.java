@@ -20,9 +20,7 @@ package frc.robot;
 import frc.robot.commands.ArmCommands.ArmGo;
 import frc.robot.commands.ArmCommands.ArmStop;
 import frc.robot.commands.ArmCommands.ArmHold;
-import frc.robot.commands.ArmCommands.ArmMoveHome;
 import frc.robot.commands.ArmCommands.ArmJoystick;
-import frc.robot.commands.ArmCommands.ArmMoveFront;
 import frc.robot.commands.ArmCommands.VelocityMode;
 //import frc.robot.commands.ArmCommands.ArmMotorLeadGo;
 //import frc.robot.commands.ArmCommands.ArmMotorLeadStop;
@@ -135,9 +133,9 @@ private final XboxController xboxController1 = new XboxController(0);
     SmartDashboard.putData("ExampleInstantCommand", new ExampleInstantCommand( m_wrist ));
     SmartDashboard.putData("ArmGo", new ArmGo( m_arm ));
     SmartDashboard.putData("ArmHold", new ArmHold( m_arm ));
-    SmartDashboard.putData("ArmHome", new ArmMoveHome( m_arm ));
+
     SmartDashboard.putData("ArmJoystick", new ArmJoystick( m_arm ));
-    SmartDashboard.putData("ArmPosA", new ArmMoveFront( m_arm ));
+
     SmartDashboard.putData("ArmStop", new ArmStop( m_arm ));
     SmartDashboard.putData("VelocityMode", new VelocityMode( m_arm ));
     SmartDashboard.putData("ElevatorMotorGo", new ElevatorMotorGo( m_elevator ));

@@ -5,11 +5,15 @@
 package frc.robot.commands.WristCommands;
 
 import frc.robot.subsystems.wrist;
+import frc.robot.SetPoints;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 /** An example command that uses an example subsystem. */
 public class WristMoveHome extends CommandBase {
+  
+  public double homePosition = SetPoints.WristHome;
+
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final wrist m_WristSubsystem;
   
@@ -31,7 +35,7 @@ public class WristMoveHome extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_WristSubsystem.wristMoveHome();
+    m_WristSubsystem.wristGoToPosition(homePosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

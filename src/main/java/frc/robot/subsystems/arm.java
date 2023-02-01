@@ -184,61 +184,10 @@ public void velocityMode(){
     m_pidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
     processVariable = magEncoder.getVelocity();
 }
-public void armMoveHome(){
-    setPoint = armHome;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-public void armMoveFront(){
-    setPoint = armFront;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-public void armMoveBack(){
-    setPoint = armBack;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-public void armPlaceHybridFront(){
-    setPoint = armPlaceHybridFront;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-public void armPlaceHybridBack(){
-    setPoint = armPlaceHybridBack;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-public void armPlaceConeMiddleFront(){
-    setPoint = armPlaceConeMiddleFront;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-public void armPlaceConeMiddleBack(){
-    setPoint = armPlaceConeMiddleBack;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
 
-public void armPlaceCubeMiddleFront(){
-    setPoint = armPlaceCubeMiddleFront;
+public void armGoToPosition(Double position){
+    setPoint = position;
     m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-
-public void armPlaceCubeMiddleBack(){
-    setPoint = armPlaceCubeMiddleBack;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-
-public void armPlaceConeHighFront(){
-    setPoint = armPlaceConeHighFront;
-    m_pidController.setReference(setPoint,CANSparkMax.ControlType.kSmartMotion);
-}
-public void armPlaceConeHighBack(){
-    setPoint = armPlaceConeHighBack;
-    m_pidController.setReference(setPoint,CANSparkMax.ControlType.kSmartMotion);
-}
-public void armPlaceCubeHighFront(){
-    setPoint = armPlaceCubeHighFront;
-    m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
-}
-public void armPlaceCubeHighBack(){
-    setPoint = armPlaceCubeHighBack;
-    m_pidController.setReference(setPoint,CANSparkMax.ControlType.kSmartMotion);
-
 }
 public double armGetPosition(){
     double processVariable = magEncoder.getPosition();
