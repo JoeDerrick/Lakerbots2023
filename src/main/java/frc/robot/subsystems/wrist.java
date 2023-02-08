@@ -60,6 +60,7 @@ wristMotor = new CANSparkMax(15, MotorType.kBrushless);
  wristMotor.setInverted(false);
 
 m_Encoder = wristMotor.getEncoder();
+m_pidController = wristMotor.getPIDController();
 
  kP = 0.00008; 
  kI = 1e-6;

@@ -168,8 +168,8 @@ private final XboxController xboxController1 = new XboxController(0);
     m_intake.setDefaultCommand(new IntakeDoNothing( m_intake ));
     //m_wrist.setDefaultCommand(new WristManual( m_wrist ));
     m_elevator.setDefaultCommand(new ElevatorManual( m_elevator ));
-    m_drivetrain.setDefaultCommand(new JoystickDrive( m_drivetrain, translationSup, strafeSup, rotationSup, robotCentricSup));
-    m_arm.setDefaultCommand(new ArmJoystick( m_arm ));
+    //m_drivetrain.setDefaultCommand(new JoystickDrive( m_drivetrain, translationSup, strafeSup, rotationSup, robotCentricSup));
+   // m_arm.setDefaultCommand(new ArmJoystick( m_arm ));
     m_leds.setDefaultCommand(new SpiritColors(m_leds));
     
     

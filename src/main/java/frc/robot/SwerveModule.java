@@ -44,7 +44,7 @@ public class SwerveModule {
 
         
         swerveAngleFXConfig = new TalonFXConfiguration();
-        swerveDriveFXConfig = new TalonFXConfiguration();
+        swerveDriveFXConfig = new TalonFXConfiguration();    
         swerveCanCoderConfig = new CANCoderConfiguration();
 
         SupplyCurrentLimitConfiguration angleSupplyLimit = new SupplyCurrentLimitConfiguration(

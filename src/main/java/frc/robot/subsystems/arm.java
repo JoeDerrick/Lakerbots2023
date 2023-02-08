@@ -82,6 +82,9 @@ armMotorFollow.restoreFactoryDefaults();
 armMotorLead.setIdleMode(IdleMode.kBrake);
 armMotorFollow.setIdleMode(IdleMode.kBrake);
 
+m_pidController = armMotorLead.getPIDController();
+
+
 // PID coefficients
 kP = 0.00008; 
 kI = 1e-6;

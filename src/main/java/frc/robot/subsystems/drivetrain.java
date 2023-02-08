@@ -27,6 +27,22 @@ public class drivetrain extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
+
+    
+
+    public drivetrain(){
+        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro.configFactoryDefault();
+        zeroGyro();
+        
+        mSwerveMods = new SwerveModule[] {
+            new SwerveModule(0, Constants.Swerve.Mod0.constants),
+            new SwerveModule(1, Constants.Swerve.Mod1.constants),
+            new SwerveModule(2, Constants.Swerve.Mod2.constants),
+            new SwerveModule(3, Constants.Swerve.Mod3.constants)
+        };
+    }
+
     public double deadband(double val){
         
         if(Math.abs(val) > 0.25){
@@ -37,17 +53,10 @@ public class drivetrain extends SubsystemBase {
         }
     }
     public void JoystickDrive() {
-        gyro = new Pigeon2(Constants.Swerve.pigeonID);
-        gyro.configFactoryDefault();
-        zeroGyro();
+        
 
     
-        mSwerveMods = new SwerveModule[] {
-            new SwerveModule(0, Constants.Swerve.Mod0.constants),
-            new SwerveModule(1, Constants.Swerve.Mod1.constants),
-            new SwerveModule(2, Constants.Swerve.Mod2.constants),
-            new SwerveModule(3, Constants.Swerve.Mod3.constants)
-        };
+        
 
         /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.
          * See https://github.com/Team364/BaseFalconSwerve/issues/8 for more info.
@@ -59,6 +68,7 @@ public class drivetrain extends SubsystemBase {
     }
     
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+        
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
