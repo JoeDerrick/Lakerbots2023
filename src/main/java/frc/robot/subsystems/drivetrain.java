@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
-import frc.robot.commands.DrivetrainCommands.JoystickDrive;
+import frc.robot.commands.DrivetrainCommands.Drive;
 import frc.robot.Constants;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -41,6 +41,9 @@ public class drivetrain extends SubsystemBase {
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+        Timer.delay(1.0);
+        resetModulesToAbsolute();
     }
 
     public double deadband(double val){
@@ -52,20 +55,21 @@ public class drivetrain extends SubsystemBase {
             return(0);
         }
     }
-    public void JoystickDrive() {
+
         
 
     
         
 
         /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.
-         * See https://github.com/Team364/BaseFalconSwerve/issues/8 for more info.
+         * See https://github.com/Team364/BaseFalconSwerve
+         * 
+         rve/issues/8 for more info.
          */
-        Timer.delay(1.0);
-        resetModulesToAbsolute();
+        
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
-    }
+        
+
     
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         
