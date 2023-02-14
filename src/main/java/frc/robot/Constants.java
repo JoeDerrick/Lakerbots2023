@@ -10,8 +10,19 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
+
 public final class Constants {
     public static final double stickDeadband = 0.1;
+
+
+
+    public static final int kSlotIdx = 0;
+
+	public static final int kPIDLoopIdx = 0;
+
+	public static final int kTimeoutMs = 30;
+//  \/---broken because i dont know the import path
+    public static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
 
     public static final class Swerve {
         public static final int pigeonID = 13;
