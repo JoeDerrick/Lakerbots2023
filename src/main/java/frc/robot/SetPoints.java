@@ -4,8 +4,8 @@ public final class SetPoints {
     
     //arm setPoints
     public static double armHome = 0;
-    public static double armFront = 50;
-    public static double armBack = -50;
+    public static double armFront = 25;
+    public static double armBack = -25;
     public static double armPlaceHybridFront = 100;
     public static double armPlaceHybridBack = -100;
     public static double armPlaceConeMiddleFront = 250;
