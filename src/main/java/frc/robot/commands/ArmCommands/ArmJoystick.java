@@ -38,7 +38,7 @@ public class ArmJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ArmSubsystem.armJoystick(xboxController1.getLeftY());
+  m_ArmSubsystem.armJoystick(xboxController1.getRightY()*0.2);
     System.out.println(m_ArmSubsystem.magEncoder.getVelocity());
   }
   // Called once the command ends or is interrupted.
