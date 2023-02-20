@@ -39,6 +39,7 @@ public class ArmJoystick extends CommandBase {
   @Override
   public void execute() {
     m_ArmSubsystem.armJoystick(xboxController1.getLeftY());
+    System.out.println(m_ArmSubsystem.magEncoder.getVelocity());
   }
   // Called once the command ends or is interrupted.
   @Override
