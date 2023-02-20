@@ -22,7 +22,7 @@ public final class Constants {
 
 	public static final int kTimeoutMs = 30;
 //  \/---broken because i dont know the import path
-    public static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
+    public static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.048, 0, 1.0);
 
     public static final class Swerve {
         public static final int pigeonID = 13;
