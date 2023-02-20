@@ -55,7 +55,7 @@ public class IntakeMotorLeftGo extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_intake.intakeMotorLeftGo();
+        m_intake.intakeMotorGo();
     }
 
     // Called once the command ends or is interrupted.
