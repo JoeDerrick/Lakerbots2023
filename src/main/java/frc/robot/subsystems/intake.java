@@ -84,7 +84,7 @@ intakeMotor = new CANSparkMax(16, MotorType.kBrushless);
  //addChild("intakeMotorSqueeze",intakeMotorSqueeze);
  //intakeMotorSqueeze.setInverted(false);
 
- //m_pidController = intakeMotorSqueeze.getPIDController();
+ m_pidController = intakeMotor.getPIDController();
 
  // Encoder object created to display position values
  //m_encoder = intakeMotorSqueeze.getEncoder();

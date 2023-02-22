@@ -142,6 +142,11 @@ m_pidController = wristMotor.getPIDController();
         setPoint = setPoint;
         m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
     }
+
+    public void wristJoystick(double y){
+        wristMotor.set(y); // slowed down arm for testing
+        //armMotorFollow.set(y*0.25); //^
+    }
     /*public void wristMoveHome(){
         setPoint = WristHome;
         m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);

@@ -17,6 +17,7 @@ public final class SetPoints {
     public static double armPlaceConeHighBack = -350;
     public static double armPlaceCubeHighFront = 25;
     public static double armPlaceCubeHighBack = -300;
+    public static double armPickupFront = -58;
 
     //intake setPoints
     public static double intakeHome = 0;
