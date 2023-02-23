@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-
 import frc.robot.SwerveModule;
 import frc.robot.commands.DrivetrainCommands.Drive;
 import frc.robot.Constants;
@@ -20,92 +19,87 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
-
-
-
-
-
 public class drivetrain extends SubsystemBase {
-    //public Deadband deadband = new Deadband();
+    // public Deadband deadband = new Deadband();
     public SwerveDriveOdometry swerveOdometry;
     public drivetrain m_drivetrain;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
-
-    
-
-    public drivetrain(){
+    public drivetrain() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
-        
+
         mSwerveMods = new SwerveModule[] {
-            new SwerveModule(0, Constants.Swerve.Mod0.constants),
-            new SwerveModule(1, Constants.Swerve.Mod1.constants),
-            new SwerveModule(2, Constants.Swerve.Mod2.constants),
-            new SwerveModule(3, Constants.Swerve.Mod3.constants)
+                new SwerveModule(0, Constants.Swerve.Mod0.constants),
+                new SwerveModule(1, Constants.Swerve.Mod1.constants),
+                new SwerveModule(2, Constants.Swerve.Mod2.constants),
+                new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
         Timer.delay(1.0);
         resetModulesToAbsolute();
     }
 
-    public double deadband(double val){
-        
-        if(Math.abs(val) > 0.25){
-            return(val);
-        }
-        else{
-            return(0);
+    public double getAverageEncoderValue() {
+        SwerveModule module0 = mSwerveMods[0];
+        SwerveModule module1 = mSwerveMods[1];
+        SwerveModule module2 = mSwerveMods[2];
+        SwerveModule module3 = mSwerveMods[3];
+        return (((Math.abs(module0.getWheelPosition()) +
+            Math.abs(module1.getWheelPosition()) +
+            Math.abs(module2.getWheelPosition()) +
+            Math.abs(module3.getWheelPosition())// Do the math to make this into inches
+        ) / 4) / (1350)); //TODO Do this math
+        // 1280 ticks per revolution (2048 ticks per rev x 6.8 Gear Ratio / 2pi x3.5
+                      // inches per rev)
+    }
+
+    public double deadband(double val) {
+
+        if (Math.abs(val) > 0.25) {
+            return (val);
+        } else {
+            return (0);
         }
     }
 
-        
+    /*
+     * By pausing init for a second before setting module offsets, we avoid a bug
+     * with inverting motors.
+     * See https://github.com/Team364/BaseFalconSwerve
+     * 
+     * rve/issues/8 for more info.
+     */
 
-    
-        
-
-        /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.
-         * See https://github.com/Team364/BaseFalconSwerve
-         * 
-         rve/issues/8 for more info.
-         */
-        
-
-        
-
-    
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        
-        SwerveModuleState[] swerveModuleStates =
-            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    deadband(translation.getX()), 
-                                    deadband(translation.getY()), 
-                                    rotation, 
-                                    getYaw()
-                                )
-                                : new ChassisSpeeds(
-                                    deadband(translation.getX()), 
-                                    deadband(translation.getY()), 
-                                    rotation)
-                                );
+                        deadband(translation.getX()),
+                        deadband(translation.getY()),
+                        rotation,
+                        getYaw())
+                        : new ChassisSpeeds(
+                                deadband(translation.getX()),
+                                deadband(translation.getY()),
+                                rotation));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-    }    
+    }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
-        
-        for(SwerveModule mod : mSwerveMods){
+
+        for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
         }
-    }    
+    }
 
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
@@ -115,44 +109,45 @@ public class drivetrain extends SubsystemBase {
         swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
 
-    public SwerveModuleState[] getModuleStates(){
+    public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             states[mod.moduleNumber] = mod.getState();
         }
         return states;
     }
 
-    public SwerveModulePosition[] getModulePositions(){
+    public SwerveModulePosition[] getModulePositions() {
         SwerveModulePosition[] positions = new SwerveModulePosition[4];
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             positions[mod.moduleNumber] = mod.getPosition();
         }
         return positions;
     }
 
-    public void zeroGyro(){
+    public void zeroGyro() {
         gyro.setYaw(0);
     }
 
     public Rotation2d getYaw() {
-        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
+        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw())
+                : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
-    public void resetModulesToAbsolute(){
-        for(SwerveModule mod : mSwerveMods){
+    public void resetModulesToAbsolute() {
+        for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
         }
     }
 
     @Override
-    public void periodic(){
-        swerveOdometry.update(getYaw(), getModulePositions());  
+    public void periodic() {
+        swerveOdometry.update(getYaw(), getModulePositions());
 
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
         }
     }
 }

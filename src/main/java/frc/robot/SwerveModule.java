@@ -171,4 +171,8 @@ public class SwerveModule {
             getAngle()
         );
     }
+    
+    public double getWheelPosition(){
+        return mDriveMotor.getSelectedSensorPosition();
+    }
 }

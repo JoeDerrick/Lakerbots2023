@@ -23,7 +23,7 @@ public class leds extends SubsystemBase{
     }
     public void purple(){
         for(var i = 0;i < m_ledBuffer.getLength(); i++){
-            m_ledBuffer.setRGB(i, 255, 87, 51);
+            m_ledBuffer.setRGB(i, 255, 0, 255);
         }
     }
     public void green(){
