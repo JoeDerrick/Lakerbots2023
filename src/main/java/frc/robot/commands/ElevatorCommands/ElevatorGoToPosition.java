@@ -42,13 +42,15 @@ public class ElevatorGoToPosition extends CommandBase {
     @Override
     public void initialize(){
         System.out.println("ELEVATOR INIT!");
-        m_ElevatorSubsystem.elevatorGoToPosition(position);
+        
     }
 
     @Override
     public void execute(){
         System.out.println("ele exe");
         m_ElevatorSubsystem.elevatorGetPosition();
+        m_ElevatorSubsystem.elevatorGoToPosition(position);
+        System.out.println("elevatorposition" +m_ElevatorSubsystem.elevatorGetPosition());
     }
 
     @Override

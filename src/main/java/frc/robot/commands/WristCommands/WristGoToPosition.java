@@ -10,13 +10,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 /** An example command that uses an example subsystem. */
-public class WristMoveBack extends CommandBase {
+public class WristGoToPosition extends CommandBase {
+
   
-  public double backPosition = SetPoints.WristBack;
+
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final wrist m_WristSubsystem;
-  
+  public double position;
   
 
   /**
@@ -24,8 +25,9 @@ public class WristMoveBack extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public WristMoveBack(wrist subsystem) {
+  public WristGoToPosition(wrist subsystem, double position) {
     m_WristSubsystem = subsystem;
+    this.position = position; 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     
@@ -35,7 +37,7 @@ public class WristMoveBack extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_WristSubsystem.wristGoToPosition(backPosition);
+    m_WristSubsystem.wristGoToPosition(position);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
