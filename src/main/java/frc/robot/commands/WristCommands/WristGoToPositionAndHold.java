@@ -5,18 +5,20 @@
 package frc.robot.commands.WristCommands;
 
 import frc.robot.subsystems.wrist;
+import frc.robot.subsystems.intake;
 import frc.robot.SetPoints;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 /** An example command that uses an example subsystem. */
-public class WristGoToPosition extends CommandBase {
+public class WristGoToPositionAndHold extends CommandBase {
 
   
 
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final wrist m_WristSubsystem;
+  private final intake m_intake;
   public double position;
   
 
@@ -25,11 +27,13 @@ public class WristGoToPosition extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public WristGoToPosition(wrist subsystem, double position) {
-    m_WristSubsystem = subsystem;
+  public WristGoToPositionAndHold(intake intake, wrist wrist, double position) {
+    m_WristSubsystem = wrist;
+    m_intake = intake;
     this.position = position; 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(m_WristSubsystem);
+    addRequirements(m_intake);
     
     
     
@@ -45,6 +49,7 @@ public class WristGoToPosition extends CommandBase {
   @Override
   public void execute() {
     m_WristSubsystem.wristGetPosition();
+    m_intake.intakeMotorGo(0.1);
   }
   // Called once the command ends or is interrupted.
   @Override

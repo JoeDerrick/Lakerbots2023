@@ -2,8 +2,8 @@
   "lengthUnit": "Foot",
   "exportUnit": "Same as Project",
   "maxVelocity": 13.5,
-  "maxAcceleration": 1.0,
+  "maxAcceleration": 3.0,
   "trackWidth": 2.05483333,
   "gameName": "Charged Up",
-  "outputDir": ""
+  "outputDir": "../../../Lakerbots2023/Lakerbots2023"
 }

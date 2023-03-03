@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.subsystems.intake;
+import frc.robot.subsystems.*;
 
 
 /**
@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
-    public intake m_intake;
+    
 
     /**
      * This function is run when the robot is first started up and should be
@@ -47,6 +47,8 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
+
+        
     }
 
     /**
@@ -113,7 +115,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-       // SmartDashboard.putNumber("intake current", m_intake.getIntakeMotorCurrent());
+    
     }
 
     @Override

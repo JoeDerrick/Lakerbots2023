@@ -58,8 +58,8 @@ public double setPoint;
 
 public double inPositionThreshold = 1.0;
 
-public double coneThreshhold = 2.5;
-public double cubeThreshhold = 1.0;
+public double coneThreshhold = 25;
+public double cubeThreshhold = 25;
 /*m_pidController = intakeMotorSqueeze.getPIDController();
 
 m_encoder = intakeMotorLeft.getEncoder();
@@ -187,6 +187,10 @@ intakeMotor = new CANSparkMax(16, MotorType.kBrushless);
 
     @Override
     public void periodic() {
+
+
+        /* */
+        SmartDashboard.putNumber("intake current", getIntakeMotorCurrent());
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("P Gain", kP);
     SmartDashboard.putNumber("I Gain", kI);

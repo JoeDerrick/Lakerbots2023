@@ -213,11 +213,15 @@ m_pidController = wristMotor.getPIDController();
   if((maxA != maxAcc)) { m_pidController.setSmartMotionMaxAccel(maxA,0); maxAcc = maxA; }
   if((allE != allowedErr)) { m_pidController.setSmartMotionAllowedClosedLoopError(allE,0); allowedErr = allE; }
 */
+
+/* 
   SmartDashboard.putNumber("Wrist SetPoint", setPoint);
   SmartDashboard.putNumber("Wrist Process Variable", processVariable);
   SmartDashboard.putNumber("Wrist Output", wristMotor.getAppliedOutput());
   SmartDashboard.putNumber("Wrist Position", m_Encoder.getPosition());
   SmartDashboard.putNumber("Wrist Velocity", m_Encoder.getVelocity());
+
+  */
 
     }
 

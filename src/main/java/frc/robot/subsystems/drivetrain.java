@@ -42,6 +42,18 @@ public class drivetrain extends SubsystemBase {
         resetModulesToAbsolute();
     }
 
+    
+
+    public void resetEncoders() {
+        SwerveModule module0 = mSwerveMods[0];
+        SwerveModule module1 = mSwerveMods[1];
+        SwerveModule module2 = mSwerveMods[2];
+        SwerveModule module3 = mSwerveMods[3];
+        module0.resetDriveEncoder();
+        module1.resetDriveEncoder();
+        module2.resetDriveEncoder();
+        module3.resetDriveEncoder();
+    }
     public double getAverageEncoderValue() {
         SwerveModule module0 = mSwerveMods[0];
         SwerveModule module1 = mSwerveMods[1];
@@ -134,6 +146,10 @@ public class drivetrain extends SubsystemBase {
                 : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
+    public double getPitch() {
+        return gyro.getPitch();
+    }
+
     public void resetModulesToAbsolute() {
         for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
@@ -144,10 +160,17 @@ public class drivetrain extends SubsystemBase {
     public void periodic() {
         swerveOdometry.update(getYaw(), getModulePositions());
 
+
+        //for swerve tuning
+
         for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
         }
+        //---- 0 = Back Right
+        //---- 1 = Front right
+        //---- 2 = Back Left
+        //---- 3 = Front Left
     }
 }

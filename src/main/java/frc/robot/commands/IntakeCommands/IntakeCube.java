@@ -46,24 +46,16 @@ public class IntakeCube extends CommandBase {
     @Override
     public void initialize(){
         startTime = System.currentTimeMillis();
+        isFinished = false;
     }
 
     @Override
     public void execute(){
-        currentTime = System.currentTimeMillis();
-        if(currentTime > startTime + 300){
-            if(intake.cubeIsIntaked()){
-                intake.intakeMotorStop();
-                isFinished = true;
-            }
-            else{
-                intake.intakeMotorGo(speed);
-            }
+        
+        intake.intakeMotorGo(speed);
             
-        }
-        else{
-            intake.intakeMotorGo(speed);
-        }
+            
+       
     }
 
     @Override

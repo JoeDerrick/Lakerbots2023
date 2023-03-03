@@ -260,12 +260,15 @@ public boolean armAtTargetPosition(){
   if((maxA != maxAcc)) { m_pidController.setSmartMotionMaxAccel(maxA,0); maxAcc = maxA; }
   if((allE != allowedErr)) { m_pidController.setSmartMotionAllowedClosedLoopError(allE,0); allowedErr = allE; }
 */
+
+  /* 
   SmartDashboard.putNumber("SetPoint", setPoint);
   SmartDashboard.putNumber("Process Variable", processVariable);
   SmartDashboard.putNumber("Output", armMotorLead.getAppliedOutput());
   SmartDashboard.putNumber("Position", magEncoder.getPosition());
   SmartDashboard.putNumber("Arm Velocity", magEncoder.getVelocity());
   SmartDashboard.putNumber("Amps yo", armGetCurrent());
+  */
 
 }
 

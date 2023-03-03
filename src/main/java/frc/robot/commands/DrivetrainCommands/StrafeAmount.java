@@ -8,14 +8,14 @@ import frc.robot.subsystems.drivetrain;
 import frc.robot.Constants;
 
 
-public class DriveAmount extends CommandBase {
+public class StrafeAmount extends CommandBase {
 
     double amount;
     double speed;
     drivetrain m_Drivetrain;
     boolean IfForward;
 
-    public DriveAmount(drivetrain m_Drivetrain, double amount, double speed, boolean IfForward){
+    public StrafeAmount(drivetrain m_Drivetrain, double amount, double speed, boolean IfForward){
         this.amount = amount;
         this.m_Drivetrain = m_Drivetrain;
         this.IfForward = IfForward;
@@ -42,7 +42,7 @@ public class DriveAmount extends CommandBase {
         }
         */
         m_Drivetrain.drive(
-                new Translation2d(speed, 0).times(Constants.Swerve.maxSpeed),
+                new Translation2d(0, speed).times(Constants.Swerve.maxSpeed),
                 0 * Constants.Swerve.maxAngularVelocity,
                 false,
                 true);
