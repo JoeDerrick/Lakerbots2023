@@ -44,10 +44,10 @@ public class HighCubeAndEngageAuto extends SequentialCommandGroup {
         
         new ScoreHighCubePose(intake, wrist, arm, elevator),
         new IntakeMotorGo(intake, -0.2).withTimeout(.3),
-        new HomePose(elevator, intake, wrist, arm),
+        //new HomePose(elevator, intake, wrist, arm),
         new ClimbPoseBack(elevator, intake, wrist, arm),
         new DriveAmount(drivetrain,89,-.2, true),
-        new StrafeAmount(drivetrain,2,-0.05, true)
+        new StrafeAmount(drivetrain,5,-0.05, true)
        // new Balance(drivetrain)
         );
     }

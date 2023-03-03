@@ -70,7 +70,7 @@ public class drivetrain extends SubsystemBase {
 
     public double deadband(double val) {
 
-        if (Math.abs(val) > 0.25) {
+        if (Math.abs(val) > 0.03) {
             return (val);
         } else {
             return (0);

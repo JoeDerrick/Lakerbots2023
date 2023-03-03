@@ -14,6 +14,7 @@ package frc.robot.commands.SmartCommands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.DrivetrainCommands.DriveAmount;
+import frc.robot.commands.DrivetrainCommands.DriveAmountWhileCollecting;
 import frc.robot.commands.IntakeCommands.IntakeCube;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 import frc.robot.commands.SmartCommands.ClimbPoseBack;
@@ -44,9 +45,10 @@ public class PickupCubeBlueLoadingStation extends SequentialCommandGroup {
         
         new ScoreHighConePose(intake, wrist, arm, elevator),
         new IntakeMotorGo(intake, -0.2).withTimeout(.3),
-        new HomePose(elevator, intake, wrist, arm),
+        //new HomePose(elevator, intake, wrist, arm),
         new ClimbPoseBack(elevator, intake, wrist, arm),
-        new DriveAmount(drivetrain,82,-.2, true)
+        new DriveAmountWhileCollecting(intake, drivetrain,140,-.4, true)
+        
        // new Balance(drivetrain)
         );
     }
