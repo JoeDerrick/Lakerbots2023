@@ -12,16 +12,20 @@ import frc.robot.subsystems.intake;
 public class DriveAmountWhileCollecting extends CommandBase {
 
     double amount;
-    double speed;
+    double xspeed;
+    double yspeed;
+    double intakespeed;
     drivetrain m_Drivetrain;
     boolean IfForward;
     intake m_intake;
 
-    public DriveAmountWhileCollecting(intake intake, drivetrain m_Drivetrain, double amount, double speed, boolean IfForward){
+    public DriveAmountWhileCollecting(intake intake, drivetrain m_Drivetrain, double amount, double xspeed,double yspeed, double intakespeed, boolean IfForward){
         this.amount = amount;
         this.m_Drivetrain = m_Drivetrain;
         this.IfForward = IfForward;
-        this.speed = speed;
+        this.xspeed = xspeed;
+        this.yspeed= yspeed;
+        this.intakespeed = intakespeed;
         m_intake = intake;
         addRequirements(m_Drivetrain);
         addRequirements(m_intake);
@@ -35,7 +39,7 @@ public class DriveAmountWhileCollecting extends CommandBase {
 
     @Override
     public void execute(){
-        m_intake.intakeMotorGo(0.2);
+        m_intake.intakeMotorGo(intakespeed);//0.2
         
         System.out.println(m_Drivetrain.getAverageEncoderValue());
         /* 
@@ -47,7 +51,7 @@ public class DriveAmountWhileCollecting extends CommandBase {
         }
         */
         m_Drivetrain.drive(
-                new Translation2d(speed, 0.035).times(Constants.Swerve.maxSpeed),
+                new Translation2d(xspeed,yspeed).times(Constants.Swerve.maxSpeed),//yspeed =0.035;
                 0 * Constants.Swerve.maxAngularVelocity,
                 false,
                 true);

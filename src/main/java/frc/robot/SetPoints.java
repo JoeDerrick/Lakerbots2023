@@ -35,6 +35,7 @@ public final class SetPoints {
     public static double ElevatorHome = 0;
     public static double ElevatorMiddle = -20000 * 1.588235294;
     public static double ElevatorHigh = -71000 * 1.588235294;
+    public static double ElevatorMiddleCube = -15000*1.588;
     public static double ElevatorHighCube = -63000 * 1.588235294;
     public static double ElevatorLoadingStation = -35000 * 1.588235294;
 
