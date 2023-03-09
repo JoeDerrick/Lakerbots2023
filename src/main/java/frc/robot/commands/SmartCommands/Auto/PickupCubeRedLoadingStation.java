@@ -33,11 +33,11 @@ import frc.robot.subsystems.wrist;
 /**
  *
  */
-public class PickupCubeBlueLoadingStation extends SequentialCommandGroup {
+public class PickupCubeRedLoadingStation extends SequentialCommandGroup {
 
    
 
-    public PickupCubeBlueLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain){
+    public PickupCubeRedLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain){
 
   
     addCommands(
@@ -46,7 +46,7 @@ public class PickupCubeBlueLoadingStation extends SequentialCommandGroup {
         new IntakeMotorGo(intake, -0.2).withTimeout(.3),
         //new HomePose(elevator, intake, wrist, arm),
         new ClimbPoseBack(elevator, intake, wrist, arm),
-        new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,0.045,0.2, true)
+        new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,-0.045,0.2, true)
         
        // new Balance(drivetrain)
         );
