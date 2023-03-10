@@ -46,7 +46,7 @@ public class PickupCubeBlueFarLoadingStation extends SequentialCommandGroup {
         new IntakeMotorGo(intake, -0.2).withTimeout(.3),
         //new HomePose(elevator, intake, wrist, arm),
         new ClimbPoseBack(elevator, intake, wrist, arm),
-        new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,0.045,0.2, true)
+        new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,-0.045,0.2, true)
         
        // new Balance(drivetrain)
         );

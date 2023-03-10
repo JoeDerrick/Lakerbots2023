@@ -38,7 +38,7 @@ public class PickupCubeRedLoadingStation extends SequentialCommandGroup {
    
 
     public PickupCubeRedLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain){
-
+ 
   
     addCommands(
         

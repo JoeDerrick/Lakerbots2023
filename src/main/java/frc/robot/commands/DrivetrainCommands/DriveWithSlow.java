@@ -34,7 +34,8 @@ public class DriveWithSlow extends CommandBase {
 
     @Override
     public void execute() {
-        // System.out.println(pov.getPOV());
+        System.out.println("pitch =" +
+        m_Drivetrain.getPitch());
         /* Get Values, Deadband */
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
@@ -54,7 +55,7 @@ public class DriveWithSlow extends CommandBase {
             // up
             case 0:
                 m_Drivetrain.drive(
-                        new Translation2d(0.1, 0).times(Constants.Swerve.maxSpeed),
+                        new Translation2d(0.15, 0).times(Constants.Swerve.maxSpeed),
                         rotationVal * Constants.Swerve.maxAngularVelocity,
                         !robotCentricSup.getAsBoolean(),
                         true);
@@ -62,7 +63,7 @@ public class DriveWithSlow extends CommandBase {
             // down
             case 180:
                 m_Drivetrain.drive(
-                        new Translation2d(-0.1, 0).times(Constants.Swerve.maxSpeed),
+                        new Translation2d(-0.15, 0).times(Constants.Swerve.maxSpeed),
                         rotationVal * Constants.Swerve.maxAngularVelocity,
                         !robotCentricSup.getAsBoolean(),
                         true);

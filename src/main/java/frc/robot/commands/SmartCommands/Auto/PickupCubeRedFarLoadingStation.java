@@ -33,11 +33,11 @@ import frc.robot.subsystems.wrist;
 /**
  *
  */
-public class PickupCubeBlueLoadingStation extends SequentialCommandGroup {
+public class PickupCubeRedFarLoadingStation extends SequentialCommandGroup {
 
    
 
-    public PickupCubeBlueLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain){
+    public PickupCubeRedFarLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain){
 
   
     addCommands(

@@ -42,7 +42,7 @@ public class ClimbPoseBack extends SequentialCommandGroup {
     addCommands(
     new ElevatorGoToPosition(elevator,SetPoints.ElevatorHome),
     new WristGoToPosition(wrist, SetPoints.WristChargeBack),
-    new ArmGoToPosition(arm, SetPoints.armPickupBack),
+    new ArmGoToPosition(arm, SetPoints.armChargeBack),
     new IntakeMotorGo(intake, 0)
 
     );

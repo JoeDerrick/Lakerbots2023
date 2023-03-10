@@ -58,7 +58,7 @@ public double setPoint;
 
 public double inPositionThreshold = 1.0;
 
-public double coneThreshhold = 25;
+public double coneThreshhold = 45;
 public double cubeThreshhold = 25;
 /*m_pidController = intakeMotorSqueeze.getPIDController();
 
@@ -138,7 +138,7 @@ intakeMotor = new CANSparkMax(16, MotorType.kBrushless);
         }
     }
 
-    public boolean coneIsIntaked(){
+    public boolean gamePieceIsIntaked(){
         if (Math.abs(getIntakeMotorCurrent()) > coneThreshhold){
             return true;
         }

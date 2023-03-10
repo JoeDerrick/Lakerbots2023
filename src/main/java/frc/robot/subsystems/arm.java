@@ -110,15 +110,15 @@ armHome = SetPoints.armHome;
 armFront = SetPoints.armFront;
 armBack = SetPoints.armBack;
 armPlaceHybridFront = SetPoints.armPlaceHybridFront;
-armPlaceHybridBack = SetPoints.armPlaceHybridBack;
+//armPlaceHybridBack = SetPoints.armPlaceHybridBack;
 armPlaceConeMiddleFront = SetPoints.armPlaceConeMiddleFront;
-armPlaceConeMiddleBack = SetPoints.armPlaceConeMiddleBack;
-armPlaceCubeMiddleFront = SetPoints.armPlaceCubeMiddleFront;
-armPlaceCubeMiddleBack = SetPoints.armPlaceCubeMiddleBack;
+//armPlaceConeMiddleBack = SetPoints.armPlaceConeMiddleBack;
+//armPlaceCubeMiddleFront = SetPoints.armPlaceCubeMiddleFront;
+//armPlaceCubeMiddleBack = SetPoints.armPlaceCubeMiddleBack;
 armPlaceConeHighFront = SetPoints.armPlaceConeHighFront;
 armPlaceConeHighBack = SetPoints.armPlaceConeHighBack;
 armPlaceCubeHighFront = SetPoints.armPlaceCubeHighFront;
-armPlaceCubeHighBack = SetPoints.armPlaceCubeHighBack;
+//armPlaceCubeHighBack = SetPoints.armPlaceCubeHighBack;
 
 // Smart Motion Coefficients
 maxVel = 6000; // rpm

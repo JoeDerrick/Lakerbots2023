@@ -44,7 +44,7 @@ public class ScoreMiddleCubePose extends SequentialCommandGroup {
     
     addCommands(
     new ArmGoToPositionAndHold(intake, arm, SetPoints.armPlaceConeHighFront),
-    new WristGoToPositionAndHold(intake, wrist, SetPoints.WristScoreFront),
+    new WristGoToPositionAndHold(intake, wrist, SetPoints.WristScoreFrontCube),
     new ElevatorGoToPositionAndHold(intake, elevator, SetPoints.ElevatorMiddleCube)
 
     );
