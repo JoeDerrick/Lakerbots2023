@@ -60,7 +60,7 @@ public class DriveAmountAndDriveUntilBalanced extends CommandBase {
         }
         else{
         m_Drivetrain.drive(
-                new Translation2d(speed * p * pitch, 0).times(Constants.Swerve.maxSpeed),
+                new Translation2d(speed * p * pitch,  0).times(Constants.Swerve.maxSpeed),
                 0 * Constants.Swerve.maxAngularVelocity,
                 false,
                 true);
@@ -75,6 +75,7 @@ public class DriveAmountAndDriveUntilBalanced extends CommandBase {
 
     @Override
     public boolean isFinished() {
+
      /* 
         if (Math.abs(pitch) < threshhold){
         System.out.println("DRIVE balalalal DONE");
