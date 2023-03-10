@@ -15,7 +15,7 @@ public final class SetPoints {
     public static double armLoadingStation = -20;
     public static double armHome = 0;
     public static double armPlaceConeHighBack = 25;
-    public static double armPickupBack = 53;
+    public static double armPickupBack = 52;
     public static double armChargeBack = 55;
 
 
@@ -27,7 +27,7 @@ public final class SetPoints {
     public static double ElevatorHigh = -70000 * 1.588235294;
     public static double ElevatorMiddleCube = -15000*1.588 * 0;
     public static double ElevatorHighCube = -56000 * 1.588235294;
-    public static double ElevatorLoadingStation = -35000 * 1.588235294;
+    public static double ElevatorLoadingStation = -40000 * 1.588235294;
 
     
 
@@ -38,8 +38,8 @@ public final class SetPoints {
     public static double WristScoreFrontCube = 10;
     public static double WristLoadingStationToGetPastBearing = 10;
     public static double WristChargeBack = 13;
-    public static double WristPickupUprightCone = 15;
-    public static double WristCollectBack = 22;
+    public static double WristPickupUprightCone = 10;
+    public static double WristCollectBack = 21;
     public static double WristTop = 20;
     public static double WristCollect = 24;//30
     public static double WristBack = 35;
