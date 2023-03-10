@@ -71,12 +71,16 @@ import frc.robot.commands.LEDCommands.SpiritColors;
 import frc.robot.commands.LEDCommands.Yellow;
 import frc.robot.commands.SmartCommands.ClimbPose;
 import frc.robot.commands.SmartCommands.CollectFloorPose;
+import frc.robot.commands.SmartCommands.CollectFloorPoseBack;
 import frc.robot.commands.SmartCommands.HomePose;
 import frc.robot.commands.SmartCommands.Collects.CollectLoadingStationPose;
 import frc.robot.commands.SmartCommands.Collects.CollectUprightPose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighConePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreMiddleConePose;
+import frc.robot.commands.SmartCommands.Scores.ScoreMiddleCubePose;
+import frc.robot.commands.SmartCommands.Auto.PickupCubeRedLoadingStation;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.XboxController;
@@ -114,6 +118,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.LEDCommands.SpiritColors;
 import frc.robot.commands.SmartCommands.Auto.AutoDrive;
 import frc.robot.commands.SmartCommands.Auto.HighCubeAndEngageAuto;
+import frc.robot.commands.SmartCommands.Auto.PickupCubeBlueFarLoadingStation;
 import frc.robot.commands.SmartCommands.Auto.PickupCubeBlueLoadingStation;
 import frc.robot.commands.SmartCommands.ClimbPoseBack;
 
@@ -172,7 +177,7 @@ private final XboxController xboxController0 = new XboxController(0);
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
 
  /*  private final POVButton down = new POVButton(driver, 180);
   private final POVButton up = new POVButton(driver, 0);
@@ -180,7 +185,7 @@ private final XboxController xboxController0 = new XboxController(0);
   private final POVButton right = new POVButton(driver, 90);
   */
   /* Subsystems */
-  private final drivetrain m_drivetrain = new drivetrain();
+  public final drivetrain m_drivetrain = new drivetrain();
 
 
 
@@ -219,7 +224,7 @@ private final XboxController xboxController0 = new XboxController(0);
    //-----I don't think we need this drive default command anymore-----//
    // m_drivetrain.setDefaultCommand(new Drive( m_drivetrain, translationSup, strafeSup, rotationSup, robotCentricSup));
     //m_arm.setDefaultCommand(new ArmHold(m_arm));
-    m_leds.setDefaultCommand(new SpiritColors(m_leds));
+    //m_leds.setDefaultCommand(new SpiritColors(m_leds));
 
     m_drivetrain.setDefaultCommand(
             new DriveWithSlow(
@@ -238,10 +243,15 @@ private final XboxController xboxController0 = new XboxController(0);
     m_chooser.setDefaultOption("AutonomousCommand", new AutonomousCommand());
     m_chooser.addOption("Drive Amount", new DriveAmount(m_drivetrain,78,-0.1,true));
 
-    m_chooser.addOption("HighCubeAndEngage", new HighCubeAndEngageAuto(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain));
+    m_chooser.addOption("HighCubeAndEngage", new HighCubeAndEngageAuto(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("PickupCubeBlueLoadingSation", new PickupCubeBlueLoadingStation(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain));
+    //add blue far, red, and red far
+    m_chooser.addOption("PickupCubeBlueFarLoadingStation",new PickupCubeBlueFarLoadingStation(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain));
+    m_chooser.addOption("PickupCubeRedLoadingStation",new PickupCubeRedLoadingStation(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain));
     SmartDashboard.putData("Auto Mode", m_chooser);
+
   }
+
 
   public static RobotContainer getInstance() {
     return m_robotContainer;
@@ -269,15 +279,17 @@ final JoystickButton xboxButtonY = new JoystickButton(xboxController0, XboxContr
 final JoystickButton xboxButtonX = new JoystickButton(xboxController0, XboxController.Button.kX.value);
 final JoystickButton xboxButtonLB = new JoystickButton(xboxController0, XboxController.Button.kLeftBumper.value); 
 final JoystickButton xboxButtonRB = new JoystickButton(xboxController0, XboxController.Button.kRightBumper.value);
-final JoystickButton xboxButtonStart = new JoystickButton(xboxController0, XboxController.Button.kStart.value);   
+final JoystickButton xboxButtonStart = new JoystickButton(xboxController0, XboxController.Button.kStart.value);
+final JoystickButton xboxButtonSelect = new JoystickButton(xboxController0, XboxController.Button.kBack.value);  
 
-xboxButtonB.onTrue(new CollectLoadingStationPose(m_elevator, m_intake, m_wrist, m_arm));
-xboxButtonA.onTrue(new CollectFloorPose(m_elevator, m_intake, m_wrist, m_arm));
+xboxButtonB.onTrue(new CollectLoadingStationPose(m_elevator, m_intake, m_wrist, m_arm, m_leds));
+xboxButtonA.onTrue(new CollectFloorPose(m_elevator, m_intake, m_wrist, m_arm, m_leds));
 xboxButtonY.onTrue(new HomePose(m_elevator, m_intake, m_wrist, m_arm));
-xboxButtonX.onTrue(new CollectUprightPose(m_elevator, m_intake, m_wrist, m_arm));     
+xboxButtonX.onTrue(new CollectUprightPose(m_elevator, m_intake, m_wrist, m_arm, m_leds));     
 xboxButtonLB.onTrue(new ClimbPoseBack(m_elevator, m_intake, m_wrist, m_arm));
 xboxButtonRB.onTrue(new IntakeMotorGo(m_intake, -0.2));
 xboxButtonStart.onTrue(new ZeroGyro(m_drivetrain));
+xboxButtonSelect.onTrue(new CollectFloorPoseBack(m_elevator, m_intake, m_wrist, m_arm, m_leds));
 
 
  //------------------------OPERATOR CONTROLLER----------------------//
@@ -287,13 +299,17 @@ final JoystickButton xbox2ButtonY = new JoystickButton(xboxController1, XboxCont
 final JoystickButton xbox2ButtonX = new JoystickButton(xboxController1, XboxController.Button.kX.value);
 final JoystickButton xbox2ButtonB = new JoystickButton(xboxController1, XboxController.Button.kB.value);          
 final JoystickButton xbox2ButtonLB = new JoystickButton(xboxController1, XboxController.Button.kLeftBumper.value);
-final JoystickButton xboxButton2Start = new JoystickButton(xboxController1,XboxController.Button.kStart.value);
+final JoystickButton xbox2ButtonStart = new JoystickButton(xboxController1,XboxController.Button.kStart.value);
+final JoystickButton xbox2ButtonSelect = new JoystickButton(xboxController1,XboxController.Button.kBack.value);
 
 xbox2ButtonX.onTrue(new ScoreMiddleConePose(m_intake, m_wrist, m_arm, m_elevator));
 xbox2ButtonY.onTrue(new ScoreHighConePose(m_intake, m_wrist, m_arm, m_elevator));
-xbox2ButtonA.onTrue(new ScoreMiddleConePose(m_intake, m_wrist, m_arm, m_elevator));
+xbox2ButtonA.onTrue(new ScoreMiddleCubePose(m_intake, m_wrist, m_arm, m_elevator));
 xbox2ButtonB.onFalse(new ScoreHighCubePose(m_intake, m_wrist, m_arm, m_elevator));
 xbox2ButtonLB.onTrue(new IntakeMotorStop(m_intake));
+xbox2ButtonStart.onTrue(new Purple(m_leds));
+xbox2ButtonSelect.onTrue(new Yellow(m_leds));
+
 
 
 //final JoystickButton xbox2ButtonRB = new JoystickButton(xboxController1, XboxController.Button.kRightBumper.value);
