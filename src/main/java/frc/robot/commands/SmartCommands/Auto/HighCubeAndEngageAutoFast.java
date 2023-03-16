@@ -12,55 +12,58 @@
 
 package frc.robot.commands.SmartCommands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import frc.robot.Constants;
+import frc.robot.SetPoints;
 import frc.robot.commands.DrivetrainCommands.DriveAmount;
-import frc.robot.commands.DrivetrainCommands.DriveAmountWhileCollecting;
+import frc.robot.commands.DrivetrainCommands.DriveAmountAndDriveUntilBalanced;
+import frc.robot.commands.DrivetrainCommands.DriveUntilBalanced;
+import frc.robot.commands.DrivetrainCommands.StrafeAmount;
+import frc.robot.commands.ElevatorCommands.ElevatorGoToPosition;
 import frc.robot.commands.IntakeCommands.IntakeCube;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 import frc.robot.commands.SmartCommands.ClimbPoseBack;
 import frc.robot.commands.SmartCommands.CollectFloorPoseBack;
+import frc.robot.commands.SmartCommands.DriveAmountUntilBalancedAndArmClimbParallel;
 import frc.robot.commands.SmartCommands.HomePose;
-import frc.robot.commands.SmartCommands.Scores.ScoreHighConePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePose;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.intake;
-import frc.robot.subsystems.leds;
 import frc.robot.subsystems.arm;
 import frc.robot.subsystems.drivetrain;
 import frc.robot.commands.SmartCommands.Balance;
 
 import frc.robot.subsystems.wrist;
-
-
+import frc.robot.subsystems.leds;
+    
 /**
  *
  */
-public class PickupCubeBlueLoadingStation extends SequentialCommandGroup {
-
-   
-
-    public PickupCubeBlueLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
+public class HighCubeAndEngageAutoFast extends SequentialCommandGroup {
 
   
+
+    public HighCubeAndEngageAutoFast(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
+
     addCommands(
         
-        new ScoreHighConePose(intake, wrist, arm, elevator),
+        new ScoreHighCubePose(intake, wrist, arm, elevator),
         new IntakeMotorGo(intake, -0.2).withTimeout(.3),
+        new ElevatorGoToPosition(elevator, SetPoints.ElevatorHome),
+        new DriveAmountUntilBalancedAndArmClimbParallel(drivetrain, elevator, intake, wrist, arm),
         //new HomePose(elevator, intake, wrist, arm),
-        new CollectFloorPoseBack(elevator, intake, wrist, arm, leds).withTimeout(6),//added because it wasnt driving
-        new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,0,0.2, true),
-        new DriveAmountWhileCollecting(intake, drivetrain,5,-.1,0,0.2, true),
-        new DriveAmountWhileCollecting(intake, drivetrain,10,0.2,0,0.2, true)
-        
+        /*new ClimbPoseBack(elevator, intake, wrist, arm),
+        //new DriveAmount(drivetrain,79,-.2, true),//reduced from 89//increased from 81
+        new DriveAmountAndDriveUntilBalanced(drivetrain, -0.2,83 ),*/
+        new CollectFloorPoseBack(elevator, intake, wrist, arm, leds)
+      
        // new Balance(drivetrain)
         );
     }
 
     @Override
     public boolean runsWhenDisabled() {
-  
+    
         return false;
 
-    
     }
 }

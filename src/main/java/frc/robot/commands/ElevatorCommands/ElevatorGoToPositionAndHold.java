@@ -54,10 +54,12 @@ public class ElevatorGoToPositionAndHold extends CommandBase {
         //System.out.println("ele exe");
         m_ElevatorSubsystem.elevatorGetPosition();
         m_ElevatorSubsystem.elevatorGoToPosition(position);
-        System.out.println("elevatorposition" +m_ElevatorSubsystem.elevatorGetPosition());
+        System.out.println("elevatorposition, velocity" +m_ElevatorSubsystem.elevatorGetPosition() +m_ElevatorSubsystem.elevatorGetVelocity());
+        
         m_intake.intakeMotorGo(0.1);
     }
 
+    
     @Override
     public void end(boolean interrupted){}
 

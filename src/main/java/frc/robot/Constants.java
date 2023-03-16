@@ -14,7 +14,7 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
-
+    public static boolean isTurbo = false;
 
     public static final int kSlotIdx = 0;
 
@@ -108,7 +108,7 @@ public final class Constants {
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
         /* Module Specific Constants */
-        /* Front Left Module - Module 0 */
+        
 
 
 /*
@@ -123,7 +123,7 @@ public final class Constants {
  * ANGLES ARE BASED ON 180 DEGREES!!! ANGLES ARE BASED ON 180 DEGREES!!! ANGLES ARE BASED ON 180 DEGREES!!!
  * ANGLES ARE BASED ON 180 DEGREES!!! ANGLES ARE BASED ON 180 DEGREES!!! ANGLES ARE BASED ON 180 DEGREES!!!
  */
-
+        /* Front Left Module - Module 0 */
         public static final class Mod0 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 5;
             public static final int angleMotorID = 6;
@@ -158,7 +158,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 12;
             public static final int canCoderID = 4;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(68.0);//68 deg
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(328.0);//68 deg
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }

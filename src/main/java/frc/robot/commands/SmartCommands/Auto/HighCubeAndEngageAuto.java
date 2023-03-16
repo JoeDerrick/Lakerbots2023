@@ -21,6 +21,7 @@ import frc.robot.commands.IntakeCommands.IntakeCube;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 import frc.robot.commands.SmartCommands.ClimbPoseBack;
 import frc.robot.commands.SmartCommands.CollectFloorPoseBack;
+import frc.robot.commands.SmartCommands.DriveAmountUntilBalancedAndArmClimbParallel;
 import frc.robot.commands.SmartCommands.HomePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePose;
 import frc.robot.subsystems.elevator;
@@ -47,8 +48,8 @@ public class HighCubeAndEngageAuto extends SequentialCommandGroup {
         new IntakeMotorGo(intake, -0.2).withTimeout(.3),
         //new HomePose(elevator, intake, wrist, arm),
         new ClimbPoseBack(elevator, intake, wrist, arm),
-        //new DriveAmount(drivetrain,79,-.2, true),//reduced from 89
-        new DriveAmountAndDriveUntilBalanced(drivetrain, -0.2,81 ),
+        //new DriveAmount(drivetrain,79,-.2, true),//reduced from 89//increased from 81
+        new DriveAmountAndDriveUntilBalanced(drivetrain, -0.2,83 ),
         new CollectFloorPoseBack(elevator, intake, wrist, arm, leds)
       
        // new Balance(drivetrain)

@@ -10,25 +10,20 @@ import frc.robot.Constants;
 
 public class DriveAmountAndDriveUntilBalanced extends CommandBase {
 
-
     double speed;
     double amount;
     drivetrain m_Drivetrain;
-
     double pitch;
-
-
     double threshhold = 5;
     double p;
 
     public DriveAmountAndDriveUntilBalanced(drivetrain m_Drivetrain, double speed, double amount){
-        
         this.m_Drivetrain = m_Drivetrain;
         this.speed = speed;
         this.pitch = pitch;
         this.amount = amount;
         addRequirements(m_Drivetrain);
-        p = 0.04;
+        p = 0.05; //RIDE Match 1: 0.04 
     }
 
     @Override
@@ -39,18 +34,9 @@ public class DriveAmountAndDriveUntilBalanced extends CommandBase {
 
     @Override
     public void execute(){
-
         pitch = m_Drivetrain.getPitch();
-        
         System.out.println(m_Drivetrain.getPitch());
-        /* 
-        if(IfForward){
-            m_Drivetrain.drive(new Translation2d(0.25, 0), 0, false, true);
-        }
-        else{
-            m_Drivetrain.drive(new Translation2d(0, 0.25), 0, false, true);
-        }
-        */
+
         if(!isDocked()){
         m_Drivetrain.drive(
                 new Translation2d(speed, 0).times(Constants.Swerve.maxSpeed),
@@ -76,17 +62,6 @@ public class DriveAmountAndDriveUntilBalanced extends CommandBase {
     @Override
     public boolean isFinished() {
 
-     /* 
-        if (Math.abs(pitch) < threshhold){
-        System.out.println("DRIVE balalalal DONE");
-        return true;
-      }
-    else{
-        return false;
-
-
-        }
-        */
         return false;
     }
     
@@ -97,11 +72,6 @@ public class DriveAmountAndDriveUntilBalanced extends CommandBase {
       }
     else{
         return false;
-
-
         }
     }
-
-
-
 }

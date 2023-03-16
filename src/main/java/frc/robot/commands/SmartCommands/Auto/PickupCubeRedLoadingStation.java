@@ -18,11 +18,13 @@ import frc.robot.commands.DrivetrainCommands.DriveAmountWhileCollecting;
 import frc.robot.commands.IntakeCommands.IntakeCube;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 import frc.robot.commands.SmartCommands.ClimbPoseBack;
+import frc.robot.commands.SmartCommands.CollectFloorPoseBack;
 import frc.robot.commands.SmartCommands.HomePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighConePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePose;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.intake;
+import frc.robot.subsystems.leds;
 import frc.robot.subsystems.arm;
 import frc.robot.subsystems.drivetrain;
 import frc.robot.commands.SmartCommands.Balance;
@@ -37,7 +39,7 @@ public class PickupCubeRedLoadingStation extends SequentialCommandGroup {
 
    
 
-    public PickupCubeRedLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain){
+    public PickupCubeRedLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
  
   
     addCommands(
@@ -45,12 +47,14 @@ public class PickupCubeRedLoadingStation extends SequentialCommandGroup {
         new ScoreHighConePose(intake, wrist, arm, elevator),
         new IntakeMotorGo(intake, -0.2).withTimeout(.3),
         //new HomePose(elevator, intake, wrist, arm),
-        new ClimbPoseBack(elevator, intake, wrist, arm),
-        new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,-0.045,0.2, true)
+        new CollectFloorPoseBack(elevator, intake, wrist, arm, leds).withTimeout(6),//added because it wasnt driving
+        new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,-0,0.2, true)
         
        // new Balance(drivetrain)
         );
     }
+
+
 
     @Override
     public boolean runsWhenDisabled() {

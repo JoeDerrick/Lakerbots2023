@@ -58,7 +58,7 @@ public double setPoint;
 
 public double inPositionThreshold = 1.0;
 
-public double coneThreshhold = 45;
+public double coneThreshhold = 50;
 public double cubeThreshhold = 25;
 /*m_pidController = intakeMotorSqueeze.getPIDController();
 
@@ -192,6 +192,7 @@ intakeMotor = new CANSparkMax(16, MotorType.kBrushless);
         /* */
         SmartDashboard.putNumber("intake current", getIntakeMotorCurrent());
         // This method will be called once per scheduler run
+        /* 
         SmartDashboard.putNumber("P Gain", kP);
     SmartDashboard.putNumber("I Gain", kI);
     SmartDashboard.putNumber("D Gain", kD);
@@ -218,8 +219,10 @@ intakeMotor = new CANSparkMax(16, MotorType.kBrushless);
     if((max != kMaxOutput) || (min != kMinOutput)) { 
       m_pidController.setOutputRange(min, max); 
       kMinOutput = min; kMaxOutput = max; 
+      
 
     }
+    */
 }
 
     @Override

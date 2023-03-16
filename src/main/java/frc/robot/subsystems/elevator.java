@@ -20,6 +20,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ElevatorConstants;
 import frc.robot.Instrum;
@@ -85,8 +86,8 @@ public class elevator extends SubsystemBase {
     elevatorMotor.config_kD(ElevatorConstants.kSlotIdx, 0, ElevatorConstants.kTimeoutMs);
 
     /* Set acceleration and vcruise velocity - see documentation */
-    elevatorMotor.configMotionCruiseVelocity(18000, ElevatorConstants.kTimeoutMs);
-    elevatorMotor.configMotionAcceleration(15000, ElevatorConstants.kTimeoutMs);//10000
+    elevatorMotor.configMotionCruiseVelocity(20000, ElevatorConstants.kTimeoutMs);//20000---------------------------20000
+    elevatorMotor.configMotionAcceleration(40000, ElevatorConstants.kTimeoutMs);//50000-------------------------max is 40000
 
     /* Zero the sensor once on robot boot up */
     elevatorMotor.setSelectedSensorPosition(0, ElevatorConstants.kPIDLoopIdx, ElevatorConstants.kTimeoutMs);
@@ -95,12 +96,23 @@ public class elevator extends SubsystemBase {
    
     }
 
+    public void elevatorSetVelocity(double velocity){
+        elevatorMotor.configMotionCruiseVelocity(velocity, ElevatorConstants.kTimeoutMs);
+    }
+    public void elevatorSetAcceleration(double acceleration){
+        elevatorMotor.configMotionAcceleration(acceleration, ElevatorConstants.kTimeoutMs);//50000-------------------------max is 40000
+
+    }
+
     public void elevatorGoToPosition(double Position){
         setpoint = Position;
         elevatorMotor.set(TalonFXControlMode.MotionMagic, setpoint);
     }
     public double elevatorGetPosition(){
         return elevatorMotor.getSelectedSensorPosition();
+    }
+    public void resetElevator(){
+        elevatorMotor.setSelectedSensorPosition(0);
     }
     public boolean elevatorAtTargetPosition(){
         double currentPosition = elevatorGetPosition();
@@ -192,7 +204,8 @@ public class elevator extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         //System.out.println(+elevatorGetVelocity());
-        
+        SmartDashboard.putNumber("Elevator Velocity", elevatorGetVelocity());
+        SmartDashboard.putNumber("Elevator Position", elevatorGetPosition());
     }
 
     @Override

@@ -2,6 +2,7 @@ package frc.robot.commands.DrivetrainCommands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain;
+import frc.robot.subsystems.leds;
 
 //import java.lang.ModuleLayer.Controller;
 import java.util.function.BooleanSupplier;
@@ -12,16 +13,18 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class DriveWithSlow extends CommandBase {
+public class DriveWithSlowAndTurbo extends CommandBase {
     private drivetrain m_Drivetrain;
+    private leds m_leds;
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
     private XboxController pov;
+    private boolean ifTurbo;
 
-    public DriveWithSlow(drivetrain m_Drivetrain, DoubleSupplier translationSup, DoubleSupplier strafeSup,
-            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, XboxController pov) {
+    public DriveWithSlowAndTurbo(drivetrain m_Drivetrain, DoubleSupplier translationSup, DoubleSupplier strafeSup,
+            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, XboxController pov, boolean ifTurbo, leds m_leds) {
         this.m_Drivetrain = m_Drivetrain;
         addRequirements(m_Drivetrain);
 
@@ -30,6 +33,8 @@ public class DriveWithSlow extends CommandBase {
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
         this.pov = pov;
+        this.ifTurbo = ifTurbo;
+        this.m_leds = m_leds;
     }
 
     @Override
@@ -85,11 +90,22 @@ public class DriveWithSlow extends CommandBase {
                 break;
             // default
             default:
+                if(ifTurbo){
+                m_Drivetrain.drive(
+                    new Translation2d(translationVal*1.25, strafeVal*1.25).times(Constants.Swerve.turboSpeed),
+                    rotationVal * Constants.Swerve.maxAngularVelocity,
+                    !robotCentricSup.getAsBoolean(),
+                    true);
+                m_leds.green();
+                }
+                else{
                 m_Drivetrain.drive(
                         new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
                         rotationVal * Constants.Swerve.maxAngularVelocity,
                         !robotCentricSup.getAsBoolean(),
                         true);
+                m_leds.spiritColors();
+                }
                 break;
 
         }
