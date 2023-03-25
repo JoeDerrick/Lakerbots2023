@@ -8,7 +8,7 @@ import frc.robot.subsystems.drivetrain;
 import frc.robot.Constants;
 
 
-public class DriveAmountAndDriveUntilBalanced extends CommandBase {
+public class DriveAmountAndDriveUntilBalancedBackwards extends CommandBase {
 
     double speed;
     double amount;
@@ -17,13 +17,13 @@ public class DriveAmountAndDriveUntilBalanced extends CommandBase {
     double threshhold = 5;
     double p;
 
-    public DriveAmountAndDriveUntilBalanced(drivetrain m_Drivetrain, double speed, double amount){
+    public DriveAmountAndDriveUntilBalancedBackwards(drivetrain m_Drivetrain, double speed, double amount){
         this.m_Drivetrain = m_Drivetrain;
         this.speed = speed;
         this.pitch = pitch;
         this.amount = amount;
         addRequirements(m_Drivetrain);
-        p = 0.05; //RIDE Match 1: 0.04 
+        p = 0.04; //RIDE Match 1: 0.04 
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DriveAmountAndDriveUntilBalanced extends CommandBase {
 
     @Override
     public void execute(){
-        pitch = m_Drivetrain.getPitch();
+        pitch = -1*(m_Drivetrain.getPitch());//multiplied by -1 for going on charge the opposite way
         System.out.println(m_Drivetrain.getPitch());
 
         if(!isDocked()){

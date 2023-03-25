@@ -13,6 +13,7 @@
 package frc.robot.commands.SmartCommands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.SetPoints;
+import frc.robot.commands.DrivetrainCommands.Drive;
 import frc.robot.commands.DrivetrainCommands.DriveAmount;
 import frc.robot.commands.DrivetrainCommands.DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist;
 import frc.robot.commands.DrivetrainCommands.DriveAmountWhileCollecting;
@@ -37,26 +38,25 @@ import frc.robot.subsystems.wrist;
 /**
  *
  */
-public class PickupCubeRedLoadingStation extends SequentialCommandGroup {
+public class PickupCubeRedLoadingStationv2 extends SequentialCommandGroup {
 
    
 
-    public PickupCubeRedLoadingStation(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
- 
+    public PickupCubeRedLoadingStationv2(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
+
   
     addCommands(
-        
-    new ScoreHighConePose(intake, wrist, arm, elevator),
-    new IntakeMotorGo(intake, -0.2).withTimeout(.1),
-    new ElevatorGoToPosition(elevator, 0),
-    new IntakeMotorGo(intake, .2),
-    new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 150, 130, -0.3, -0.1, -0.02,0, SetPoints.armPickupBack, SetPoints.WristCollectBack),
-    new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 150, 100, 0.35, 0.2,0.02, 0, SetPoints.armPlaceConeMiddleFront, SetPoints.WristScoreFrontCube),
-    new IntakeMotorGo(intake, -0.2).withTimeout(0.1)
+        new DriveAmount(drivetrain, 2, -0.05, isFinished()).withTimeout(0.2),
+        new ScoreHighConePose(intake, wrist, arm, elevator),
+        new IntakeMotorGo(intake, -0.4).withTimeout(0.2),
+        new ElevatorGoToPosition(elevator, 0),
+        new IntakeMotorGo(intake, .3),
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 180, 145, -0.35, -0.12,-0.04, -0.05, SetPoints.armPickupBack, SetPoints.WristCollectBack),
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 175, 80, 0.4, 0.25,0.05, 0, SetPoints.armPlaceConeMiddleFront, SetPoints.WristScoreFrontCube),
+        new IntakeMotorGo(intake, -0.4).withTimeout(0.1),
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 20, 8, -0.2, -0.04,-0.1, 0, SetPoints.armHome, SetPoints.WristHome)
         );
     }
-
-
 
     @Override
     public boolean runsWhenDisabled() {

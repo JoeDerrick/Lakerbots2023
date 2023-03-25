@@ -12,14 +12,18 @@
 
 package frc.robot.commands.SmartCommands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import frc.robot.SetPoints;
 import frc.robot.commands.DrivetrainCommands.DriveAmount;
 import frc.robot.commands.DrivetrainCommands.DriveAmountAndDriveUntilBalanced;
+import frc.robot.commands.DrivetrainCommands.DriveAmountAndDriveUntilBalancedBackwards;
+import frc.robot.commands.DrivetrainCommands.DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist;
 import frc.robot.commands.DrivetrainCommands.DriveUntilBalanced;
 import frc.robot.commands.DrivetrainCommands.StrafeAmount;
+import frc.robot.commands.ElevatorCommands.ElevatorGoToPosition;
 import frc.robot.commands.IntakeCommands.IntakeCube;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 import frc.robot.commands.SmartCommands.ClimbPoseBack;
+import frc.robot.commands.SmartCommands.ClimbPoseBackParallel;
 import frc.robot.commands.SmartCommands.CollectFloorPoseBack;
 import frc.robot.commands.SmartCommands.DriveAmountUntilBalancedAndArmClimbParallel;
 import frc.robot.commands.SmartCommands.HomePose;
@@ -46,15 +50,17 @@ public class HighCubeAndTaxiThenEngage extends SequentialCommandGroup {
     addCommands(
         
         new ScoreHighCubePose(intake, wrist, arm, elevator),
-        new IntakeMotorGo(intake, -0.2).withTimeout(.3),
+        new IntakeMotorGo(intake, -0.2).withTimeout(.1),
+        new ElevatorGoToPosition(elevator, SetPoints.ElevatorHome),
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 150, 20, -0.12, -0.37, 0,0, SetPoints.armChargeBack, SetPoints.WristChargeBack),
         //new HomePose(elevator, intake, wrist, arm),
-        new ClimbPoseBack(elevator, intake, wrist, arm),
+        //new ClimbPoseBackParallel(elevator, intake, wrist, arm),
         //new DriveAmount(drivetrain,79,-.2, true),//reduced from 89//increased from 81
-        new DriveAmount(drivetrain,160 , -0.2, true),
+        //new DriveAmount(drivetrain,160 , -0.2, true),
         new edu.wpi.first.wpilibj2.command.WaitCommand(0.5),
         //new DriveAmount(drivetrain,-125 , -0.2, true),
         //new ClimbPose(elevator, intake, wrist, arm),
-        new DriveAmountAndDriveUntilBalanced(drivetrain, 0.2, 100)
+        new DriveAmountAndDriveUntilBalancedBackwards(drivetrain, 0.25, 54)
       
        // new Balance(drivetrain)
         );

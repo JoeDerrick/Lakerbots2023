@@ -12,8 +12,9 @@
 
 package frc.robot.commands.SmartCommands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import frc.robot.SetPoints;
 import frc.robot.commands.DrivetrainCommands.DriveAmount;
+import frc.robot.commands.DrivetrainCommands.DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist;
 import frc.robot.commands.DrivetrainCommands.DriveAmountWhileCollecting;
 import frc.robot.commands.IntakeCommands.IntakeCube;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
@@ -45,12 +46,13 @@ public class PickupCubeBlueLoadingStation extends SequentialCommandGroup {
     addCommands(
         
         new ScoreHighConePose(intake, wrist, arm, elevator),
-        new IntakeMotorGo(intake, -0.2).withTimeout(.3),
+        new IntakeMotorGo(intake, -0.2).withTimeout(.1),
         //new HomePose(elevator, intake, wrist, arm),
         new CollectFloorPoseBack(elevator, intake, wrist, arm, leds).withTimeout(6),//added because it wasnt driving
-        new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,0,0.2, true),
-        new DriveAmountWhileCollecting(intake, drivetrain,5,-.1,0,0.2, true),
-        new DriveAmountWhileCollecting(intake, drivetrain,10,0.2,0,0.2, true)
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 175, 163, -0.4, -0.1,0, 0, SetPoints.armPickupBack, SetPoints.WristCollectBack)
+        //new DriveAmountWhileCollecting(intake, drivetrain,163,-.4,0,0.2, true),
+        //new DriveAmountWhileCollecting(intake, drivetrain,5,-.1,0,0.2, true),
+        //new DriveAmountWhileCollecting(intake, drivetrain,10,0.2,0,0.2, true)
         
        // new Balance(drivetrain)
         );

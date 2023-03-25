@@ -46,8 +46,8 @@ public class CollectFloorPose extends SequentialCommandGroup {
     new ElevatorGoToPosition(elevator,SetPoints.ElevatorHome),
     new WristGoToPosition(wrist, SetPoints.WristCollect),
     new ArmGoToPosition(arm, SetPoints.armPickupFront),
-    new IntakeMotorGoForCollecting(intake, 0.2).withTimeout(0.3),
-    new IntakeGamePieceWithThreshold(intake,.2),
+    new IntakeMotorGoForCollecting(intake, 0.7).withTimeout(0.3),
+    new IntakeGamePieceWithThreshold(intake,.7),
     //new HomePose(elevator, intake, wrist, arm),
     new Green(leds),
     new IntakeMotorGo(intake, 0.05)

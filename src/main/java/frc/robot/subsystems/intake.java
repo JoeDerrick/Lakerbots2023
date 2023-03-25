@@ -58,7 +58,7 @@ public double setPoint;
 
 public double inPositionThreshold = 1.0;
 
-public double coneThreshhold = 50;
+public double coneThreshhold = 80;
 public double cubeThreshhold = 25;
 /*m_pidController = intakeMotorSqueeze.getPIDController();
 

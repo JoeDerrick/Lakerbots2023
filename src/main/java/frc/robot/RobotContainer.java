@@ -85,10 +85,11 @@ import frc.robot.commands.SmartCommands.Collects.CollectUprightPose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighConePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighConePoseParallel;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePose;
+import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePoseParallel;
 import frc.robot.commands.SmartCommands.Scores.ScoreMiddleConePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreMiddleCubePose;
 import frc.robot.commands.SmartCommands.Auto.PickupCubeRedLoadingStation;
-
+import frc.robot.commands.SmartCommands.Auto.PickupCubeRedLoadingStationv2;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.XboxController;
@@ -130,6 +131,7 @@ import frc.robot.commands.SmartCommands.Auto.HighCubeAndEngageAutoFast;
 import frc.robot.commands.SmartCommands.Auto.HighCubeAndTaxiThenEngage;
 import frc.robot.commands.SmartCommands.Auto.PickupCubeBlueFarLoadingStation;
 import frc.robot.commands.SmartCommands.Auto.PickupCubeBlueLoadingStation;
+import frc.robot.commands.SmartCommands.Auto.PickupCubeBlueLoadingStationv2;
 import frc.robot.commands.SmartCommands.Auto.PickupCubeRedFarLoadingStation;
 import frc.robot.commands.SmartCommands.ClimbPoseBack;
 
@@ -253,16 +255,12 @@ private final XboxController xboxController0 = new XboxController(0);
       
 
     m_chooser.setDefaultOption("HighCubeAndEngage", new HighCubeAndEngageAuto(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
-    m_chooser.addOption("Drive Amount", new DriveAmount(m_drivetrain,78,-0.1,true));
 
     m_chooser.addOption("HighCubeAndEngage", new HighCubeAndEngageAuto(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
-    m_chooser.addOption("PickupCubeBlueLoadingSation", new PickupCubeBlueLoadingStation(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
-    m_chooser.addOption("PickupCubeRedFarLoadingStation", new PickupCubeRedFarLoadingStation(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain));
     //add blue far, red, and red far
-    m_chooser.addOption("PickupCubeBlueFarLoadingStation",new PickupCubeBlueFarLoadingStation(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain));
-    m_chooser.addOption("PickupCubeRedLoadingStation",new PickupCubeRedLoadingStation(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
-    m_chooser.addOption("HighCUbeAndEngageFast", new HighCubeAndEngageAutoFast(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("HighCubeTaxiThenEngage", new HighCubeAndTaxiThenEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("PickupCubeBLUELoadingStationV2", new PickupCubeBlueLoadingStationv2(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("PickupCubeREDLoadingStationV2", new PickupCubeRedLoadingStationv2(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     SmartDashboard.putData("Auto Mode", m_chooser);
 
  
@@ -304,9 +302,9 @@ xboxButtonY.onTrue(new HomePoseParallel(m_elevator, m_intake, m_wrist, m_arm));
 //xboxButtonX.onTrue(new CollectUprightPose(m_elevator, m_intake, m_wrist, m_arm, m_leds));  
 xboxButtonX.onTrue(new CollectSinglePoseParallelWithSequentialIntake(m_elevator, m_intake, m_wrist, m_arm, m_leds));   
 xboxButtonLB.onTrue(new ClimbPoseBack(m_elevator, m_intake, m_wrist, m_arm));
-xboxButtonRB.onTrue(new IntakeMotorGo(m_intake, -0.15));
+xboxButtonRB.onTrue(new IntakeMotorGo(m_intake, -0.2));
 xboxButtonStart.onTrue(new ZeroGyro(m_drivetrain));
-xboxButtonSelect.onTrue(new ChangeIfTurbo());
+xboxButtonSelect.onTrue(new CollectFloorPoseBack(m_elevator, m_intake, m_wrist, m_arm, m_leds));
 
 
  //------------------------OPERATOR CONTROLLER----------------------//
@@ -321,9 +319,9 @@ final JoystickButton xbox2ButtonStart = new JoystickButton(xboxController1,XboxC
 final JoystickButton xbox2ButtonSelect = new JoystickButton(xboxController1,XboxController.Button.kBack.value);
 
 xbox2ButtonX.onTrue(new ScoreMiddleConePose(m_intake, m_wrist, m_arm, m_elevator));
-xbox2ButtonY.onTrue(new ScoreHighConePose(m_intake, m_wrist, m_arm, m_elevator));
+xbox2ButtonY.onTrue(new ScoreHighConePoseParallel(m_intake, m_wrist, m_arm, m_elevator));
 xbox2ButtonA.onTrue(new ScoreMiddleCubePose(m_intake, m_wrist, m_arm, m_elevator));
-xbox2ButtonB.onFalse(new ScoreHighCubePose(m_intake, m_wrist, m_arm, m_elevator));
+xbox2ButtonB.onFalse(new ScoreHighCubePoseParallel(m_intake, m_wrist, m_arm, m_elevator));
 xbox2ButtonLB.onTrue(new IntakeMotorStop(m_intake));
 xbox2ButtonStart.onTrue(new Purple(m_leds));
 xbox2ButtonSelect.onTrue(new Yellow(m_leds));
