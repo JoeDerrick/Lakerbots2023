@@ -13,6 +13,7 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -48,12 +49,14 @@ public class elevator extends SubsystemBase {
     //How much smoothing to use [0,8]
     int _smoothing = 0;
    
-    /**
+    /** 
 
     */
     public elevator() {
         
     elevatorMotor = new WPI_TalonFX(14);
+    //elevatorMotor.configForwardLimitSwitchSource(TalonFXFeedbackDevice.RemoteSensor0, true);
+
    
     elevatorMotor.configFactoryDefault();
     elevatorMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, ElevatorConstants.kPIDLoopIdx,

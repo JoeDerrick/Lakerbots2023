@@ -119,6 +119,7 @@ import frc.robot.commands.ElevatorCommands.ElevatorJoystick;
 
 import frc.robot.commands.DrivetrainCommands.DriveWithSlow;
 import frc.robot.commands.DrivetrainCommands.DriveWithSlowAndTurbo;
+import frc.robot.commands.DrivetrainCommands.Reset;
 import frc.robot.commands.LEDCommands.Green;
 
 
@@ -126,6 +127,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.commands.LEDCommands.SpiritColors;
 import frc.robot.commands.SmartCommands.Auto.AutoDrive;
+import frc.robot.commands.SmartCommands.Auto.HighConeBackup;
+import frc.robot.commands.SmartCommands.Auto.HighCube;
 import frc.robot.commands.SmartCommands.Auto.HighCubeAndEngageAuto;
 import frc.robot.commands.SmartCommands.Auto.HighCubeAndEngageAutoFast;
 import frc.robot.commands.SmartCommands.Auto.HighCubeAndTaxiThenEngage;
@@ -240,7 +243,7 @@ private final XboxController xboxController0 = new XboxController(0);
     //m_arm.setDefaultCommand(new ArmHold(m_arm));
     //m_leds.setDefaultCommand(new SpiritColors(m_leds));
 
-    m_drivetrain.setDefaultCommand(
+    /*m_drivetrain.setDefaultCommand(
             new DriveWithSlow(
                 m_drivetrain, 
                 () -> -driver.getRawAxis(translationAxis), 
@@ -251,10 +254,14 @@ private final XboxController xboxController0 = new XboxController(0);
 
             )
         );
+    */
+        
     // Configure autonomous sendable chooser
       
 
     m_chooser.setDefaultOption("HighCubeAndEngage", new HighCubeAndEngageAuto(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("HighCube", new HighCube(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("HighConeBackup", new HighConeBackup(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
 
     m_chooser.addOption("HighCubeAndEngage", new HighCubeAndEngageAuto(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     //add blue far, red, and red far
@@ -325,7 +332,7 @@ xbox2ButtonB.onFalse(new ScoreHighCubePoseParallel(m_intake, m_wrist, m_arm, m_e
 xbox2ButtonLB.onTrue(new IntakeMotorStop(m_intake));
 xbox2ButtonStart.onTrue(new Purple(m_leds));
 xbox2ButtonSelect.onTrue(new Yellow(m_leds));
-xbox2ButtonRB.onTrue(new SpiritColors(m_leds));
+xbox2ButtonRB.onTrue(new Reset(m_drivetrain));
 
 
 

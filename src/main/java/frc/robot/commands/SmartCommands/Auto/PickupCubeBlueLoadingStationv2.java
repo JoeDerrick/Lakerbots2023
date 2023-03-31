@@ -44,17 +44,39 @@ public class PickupCubeBlueLoadingStationv2 extends SequentialCommandGroup {
 
     public PickupCubeBlueLoadingStationv2(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
 
-  
+   
     addCommands(
+
+        //Score high
         new DriveAmount(drivetrain, 2, -0.05, isFinished()).withTimeout(0.2),
         new ScoreHighConePose(intake, wrist, arm, elevator),
         new IntakeMotorGo(intake, -0.4).withTimeout(0.2),
+    
         new ElevatorGoToPosition(elevator, 0),
         new IntakeMotorGo(intake, .3),
-        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 180, 145, -0.35, -0.12,0.04, 0.05, SetPoints.armPickupBack, SetPoints.WristCollectBack),
-        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 175, 80, 0.4, -0.25, -0.05, 0, SetPoints.armPlaceConeMiddleFront, SetPoints.WristScoreFrontCube),
+
+        //go collect pos
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
+        190, 165, 
+        -0.35, -0.12,
+        0.01, 0.02, 
+        SetPoints.armPickupBack, SetPoints.WristCollectBack),
+        
+        //score
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
+        185, 80, 
+        0.4, 0.25, 
+        -0.02, 0, 
+        SetPoints.armPlaceConeMiddleFront, SetPoints.WristScoreFrontCube),
+
+
         new IntakeMotorGo(intake, -0.4).withTimeout(0.1),
-        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 20, 8, -0.2, -0.04,0.1, 0, SetPoints.armHome, SetPoints.WristHome)
+
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
+        20, 8, 
+        -0.2, -0.04,
+        0.1, 0, 
+        SetPoints.armHome, SetPoints.WristHome)
         );
     }
 

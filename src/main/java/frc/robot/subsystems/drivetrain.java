@@ -39,7 +39,9 @@ public class drivetrain extends SubsystemBase {
         };
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
         Timer.delay(1.0);
-        resetModulesToAbsolute();
+        for(int i = 0; i<10; i++){
+            resetModulesToAbsolute();
+        }
     }
 
     
@@ -49,10 +51,12 @@ public class drivetrain extends SubsystemBase {
         SwerveModule module1 = mSwerveMods[1];
         SwerveModule module2 = mSwerveMods[2];
         SwerveModule module3 = mSwerveMods[3];
-        module0.resetDriveEncoder();
-        module1.resetDriveEncoder();
-        module2.resetDriveEncoder();
-        module3.resetDriveEncoder();
+        for(int i = 0; i<10;i++){
+            module0.resetDriveEncoder();
+            module1.resetDriveEncoder();
+            module2.resetDriveEncoder();
+            module3.resetDriveEncoder();
+        }
     }
     public double getAverageEncoderValue() {
         SwerveModule module0 = mSwerveMods[0];

@@ -15,9 +15,9 @@ public final class SetPoints {
     public static double armLoadingStation = -22;
     public static double armHome = 0;
     public static double armPlaceConeHighBack = 25;
-    public static double armPickupBack = 52;
-    public static double armChargeBack = 55;
-    public static double armSingleCollect = -43;
+    public static double armPickupBack = 55;
+    public static double armChargeBack = 57;
+    public static double armSingleCollect = -44;
 
     //Elevator setPoints
 

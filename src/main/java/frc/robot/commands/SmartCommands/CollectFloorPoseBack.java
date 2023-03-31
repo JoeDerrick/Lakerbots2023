@@ -47,11 +47,11 @@ public class CollectFloorPoseBack extends SequentialCommandGroup {
     new ElevatorGoToPosition(elevator,SetPoints.ElevatorHome),
     new WristGoToPosition(wrist, SetPoints.WristCollectBack),
     new ArmGoToPosition(arm, SetPoints.armPickupBack),
-    new IntakeMotorGoForCollecting(intake, 0.2).withTimeout(0.3),
-    new IntakeGamePieceWithThreshold(intake,.2),
+    new IntakeMotorGoForCollecting(intake, 0.7).withTimeout(0.3),
+    new IntakeGamePieceWithThreshold(intake,.7),
     new Green(leds),
     //new HomePose(elevator, intake, wrist, arm),
-    new IntakeMotorGo(intake, 0.05)
+    new IntakeMotorGo(intake, 0.1)
 
 
     );
