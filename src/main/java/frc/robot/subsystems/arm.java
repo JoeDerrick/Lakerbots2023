@@ -44,8 +44,11 @@ public class arm extends SubsystemBase {
     //private DigitalInput magEncoder; <---WRONG!
     private SparkMaxPIDController m_pidController;
     public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM, maxVel, minVel, maxAcc, allowedErr;
+    public double kPUp,kIUp,kDUp,kIzUp,maxVelUP, maxAccUP;
     //public double armPosA;
     //public double armHome;
+    public int smartMotionSlot = 0;
+    public int smartMotionSlotForUp=1;
     
     
     public double 
@@ -101,6 +104,14 @@ kI = 1e-6;
 kD = 0.0; 
 kIz = 0; 
 kFF = 1/5719; 
+
+kPUp = 5e-5;
+kIUp = 1e-6;
+kDUp = 0.0; 
+kIzUp = 0; 
+
+
+
 kMaxOutput = 1; 
 kMinOutput = -1;
 maxRPM = 5700;
@@ -120,16 +131,18 @@ armPlaceCubeHighFront = SetPoints.armPlaceCubeHighFront;
 //armPlaceCubeHighBack = SetPoints.armPlaceCubeHighBack;
 
 // Smart Motion Coefficients
-maxVel = 2500; // 2000 rpm
-maxAcc = 3250;//3000
+maxVel = 2000; // 2000 rpm
+maxAcc = 3000;//3000  
+
+maxVelUP = 2000;
+maxAccUP = 3000;
 
 // set PID coefficients
-m_pidController.setP(kP);
-m_pidController.setI(kI);
-m_pidController.setD(kD);
-
-m_pidController.setIZone(kIz);
-m_pidController.setFF(kFF);
+m_pidController.setP(kP,smartMotionSlot);
+m_pidController.setI(kI,smartMotionSlot);
+m_pidController.setD(kD,smartMotionSlot);
+m_pidController.setIZone(kIz,smartMotionSlot);
+m_pidController.setFF(kFF,smartMotionSlot);
 m_pidController.setOutputRange(kMinOutput, kMaxOutput);
 
 /**
@@ -144,11 +157,14 @@ m_pidController.setOutputRange(kMinOutput, kMaxOutput);
  * - setSmartMotionAllowedClosedLoopError() will set the max allowed
  * error for the pid controller in Smart Motion mode
  */
-int smartMotionSlot = 0;
+
 m_pidController.setSmartMotionMaxVelocity(maxVel, smartMotionSlot);
 m_pidController.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
 m_pidController.setSmartMotionMaxAccel(maxAcc, smartMotionSlot);
 m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
+
+
+
 
 // display PID coefficients on SmartDashboard
 /* meehh let's not
@@ -197,6 +213,9 @@ public void armGo(){
 public double armGetCurrent(){
     return armMotorLead.getOutputCurrent();
 }
+public double armGetVelocity(){
+    return armMotorLead.getEncoder().getVelocity();
+}
 /* 
 public void velocityMode(){
     setPoint = SmartDashboard.getNumber("Set Velocity", 0);
@@ -225,6 +244,26 @@ public boolean armAtTargetPosition(){
       return false;
     }
     }
+
+public void setArmPIDup(){
+    m_pidController.setSmartMotionMaxVelocity(maxVelUP, smartMotionSlot);
+    m_pidController.setSmartMotionMaxAccel(maxAccUP, smartMotionSlot);
+    m_pidController.setP(kPUp,smartMotionSlot);
+    m_pidController.setI(kIUp,smartMotionSlot);
+    m_pidController.setD(kDUp,smartMotionSlot);
+    m_pidController.setIZone(kIzUp,smartMotionSlot);
+
+}
+public void setArmPIDdown(){
+    m_pidController.setSmartMotionMaxVelocity(maxVel, smartMotionSlot);
+    m_pidController.setSmartMotionMaxAccel(maxAcc, smartMotionSlot);
+    m_pidController.setP(kP,smartMotionSlot);
+    m_pidController.setI(kI,smartMotionSlot);
+    m_pidController.setD(kD,smartMotionSlot);
+    m_pidController.setIZone(kIz,smartMotionSlot);
+}
+
+
 
     @Override
     public void periodic() {
@@ -265,7 +304,7 @@ public boolean armAtTargetPosition(){
   //SmartDashboard.putNumber("Process Variable", processVariable);
   //SmartDashboard.putNumber("Output", armMotorLead.getAppliedOutput());
   SmartDashboard.putNumber("Position", magEncoder.getPosition());
-  SmartDashboard.putNumber("Arm Velocity", magEncoder.getVelocity());
+  SmartDashboard.putNumber("Arm Velocity", armGetVelocity());
  // SmartDashboard.putNumber("Amps yo", armGetCurrent());
   
 

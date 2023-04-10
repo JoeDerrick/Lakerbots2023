@@ -59,14 +59,14 @@ public class PickupCubeBlueLoadingStationv2 extends SequentialCommandGroup {
         new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
         190, 165, 
         -0.35, -0.12,
-        0.01, 0.02, 
+        0.02, 0.03, //both +0.005 //both +0.005
         SetPoints.armPickupBack, SetPoints.WristCollectBack),
         
         //score
         new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
         185, 80, 
         0.4, 0.25, 
-        -0.02, 0, 
+        -0.01, 0, //first /2, second no change  // first /2, sencond no
         SetPoints.armPlaceConeMiddleFront, SetPoints.WristScoreFrontCube),
 
 

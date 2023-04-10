@@ -52,17 +52,13 @@ public class HighCubeAndTaxiThenEngage extends SequentialCommandGroup {
         new ScoreHighCubePose(intake, wrist, arm, elevator),
         new IntakeMotorGo(intake, -0.2).withTimeout(.1),
         new ElevatorGoToPosition(elevator, SetPoints.ElevatorHome),
-        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 150, 20, -0.12, -0.37, 0,0, SetPoints.armChargeBack, SetPoints.WristChargeBack),
-        //new HomePose(elevator, intake, wrist, arm),
-        //new ClimbPoseBackParallel(elevator, intake, wrist, arm),
-        //new DriveAmount(drivetrain,79,-.2, true),//reduced from 89//increased from 81
-        //new DriveAmount(drivetrain,160 , -0.2, true),
+        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist,
+         150, 20, 
+         -0.12, -0.37, 
+         0,0, 
+         SetPoints.armChargeBack, SetPoints.WristChargeBack),
         new edu.wpi.first.wpilibj2.command.WaitCommand(0.5),
-        //new DriveAmount(drivetrain,-125 , -0.2, true),
-        //new ClimbPose(elevator, intake, wrist, arm),
         new DriveAmountAndDriveUntilBalancedBackwards(drivetrain, 0.25, 54)
-      
-       // new Balance(drivetrain)
         );
     }
 

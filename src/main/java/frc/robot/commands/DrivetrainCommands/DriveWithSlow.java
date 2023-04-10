@@ -70,7 +70,7 @@ public class DriveWithSlow extends CommandBase {
             // left
             case 270:
                 m_Drivetrain.drive(
-                        new Translation2d(0, 0.1).times(Constants.Swerve.maxSpeed),
+                        new Translation2d(0, 0.13).times(Constants.Swerve.maxSpeed),
                         rotationVal * Constants.Swerve.maxAngularVelocity,
                         !robotCentricSup.getAsBoolean(),
                         true);
@@ -78,7 +78,7 @@ public class DriveWithSlow extends CommandBase {
             // right
             case 90:
                 m_Drivetrain.drive(
-                        new Translation2d(0, -0.1).times(Constants.Swerve.maxSpeed),
+                        new Translation2d(0, -0.13).times(Constants.Swerve.maxSpeed),
                         rotationVal * Constants.Swerve.maxAngularVelocity,
                         !robotCentricSup.getAsBoolean(),
                         true);

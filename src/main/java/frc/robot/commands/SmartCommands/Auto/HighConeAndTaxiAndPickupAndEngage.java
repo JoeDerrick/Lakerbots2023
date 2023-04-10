@@ -12,11 +12,17 @@
 
 package frc.robot.commands.SmartCommands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import frc.robot.commands.DrivetrainCommands.Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards;
+import frc.robot.commands.DrivetrainCommands.Drive3SpeedsAtDistancesWithArmAndWrist;
 import frc.robot.commands.DrivetrainCommands.DriveAmount;
 import frc.robot.commands.DrivetrainCommands.DriveAmountAndDriveUntilBalanced;
+import frc.robot.commands.DrivetrainCommands.DriveAmountAndDriveUntilBalancedBackwards;
+import frc.robot.commands.DrivetrainCommands.DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist;
+import frc.robot.commands.DrivetrainCommands.DriveAmountWhileCollecting;
+import frc.robot.commands.DrivetrainCommands.DriveAmountWithStrafeAndDriveUntilBalancedBackwards;
 import frc.robot.commands.DrivetrainCommands.DriveUntilBalanced;
 import frc.robot.commands.DrivetrainCommands.StrafeAmount;
+import frc.robot.commands.ElevatorCommands.ElevatorGoToPosition;
 import frc.robot.commands.IntakeCommands.IntakeCube;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 import frc.robot.commands.SmartCommands.ClimbPoseBack;
@@ -31,28 +37,35 @@ import frc.robot.subsystems.arm;
 import frc.robot.subsystems.drivetrain;
 import frc.robot.commands.SmartCommands.Balance;
 
+import frc.robot.SetPoints;
+
 import frc.robot.subsystems.wrist;
 import frc.robot.subsystems.leds;
     
 /**
  *
  */
-public class HighConeBackup extends SequentialCommandGroup {
+public class HighConeAndTaxiAndPickupAndEngage extends SequentialCommandGroup {
 
   
 
-    public HighConeBackup(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
+    public HighConeAndTaxiAndPickupAndEngage(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
 
     addCommands(
         
-        new ScoreHighConePose(intake, wrist, arm, elevator),
-        new IntakeMotorGo(intake, -0.2).withTimeout(.3),
-        new HomePose(elevator, intake, wrist, arm).withTimeout(2),
-        //new DriveAmount(drivetrain,79,-.2, true),//reduced from 89//increased from 81
-        new DriveAmount(drivetrain, -0.2, 160, true)
-      
-       // new Balance(drivetrain)
-        );
+    new ScoreHighConePose(intake, wrist, arm, elevator),
+    new IntakeMotorGo(intake, -0.2).withTimeout(.1),
+    new ElevatorGoToPosition(elevator, SetPoints.ElevatorHome),
+    new IntakeMotorGo(intake, 0.5).withTimeout(.1),
+    new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
+    185, 20,
+     -0.12, -0.37, 
+    0,0,
+    SetPoints.armChargeBack, SetPoints.WristChargeBack),
+    new edu.wpi.first.wpilibj2.command.WaitCommand(0.5),
+    new Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards(drivetrain, 0.3, 0, 0.25, 75, 35)
+    
+    );
     }
 
     @Override

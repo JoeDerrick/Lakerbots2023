@@ -82,6 +82,7 @@ import frc.robot.commands.SmartCommands.HomePose;
 import frc.robot.commands.SmartCommands.HomePoseParallel;
 import frc.robot.commands.SmartCommands.Collects.CollectLoadingStationPose;
 import frc.robot.commands.SmartCommands.Collects.CollectUprightPose;
+import frc.robot.commands.SmartCommands.Scores.ArmDownToScoreConeHigh;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighConePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighConePoseParallel;
 import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePose;
@@ -90,6 +91,7 @@ import frc.robot.commands.SmartCommands.Scores.ScoreMiddleConePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreMiddleCubePose;
 import frc.robot.commands.SmartCommands.Auto.PickupCubeRedLoadingStation;
 import frc.robot.commands.SmartCommands.Auto.PickupCubeRedLoadingStationv2;
+import frc.robot.commands.SmartCommands.Auto.RedHighCubeAndTaxiAndPickupAndEngage;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.XboxController;
@@ -127,6 +129,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.commands.LEDCommands.SpiritColors;
 import frc.robot.commands.SmartCommands.Auto.AutoDrive;
+import frc.robot.commands.SmartCommands.Auto.BlueHighCubeAndTaxiAndPickupAndEngage;
+import frc.robot.commands.SmartCommands.Auto.HighConeAndTaxiAndPickupAndEngage;
 import frc.robot.commands.SmartCommands.Auto.HighConeBackup;
 import frc.robot.commands.SmartCommands.Auto.HighCube;
 import frc.robot.commands.SmartCommands.Auto.HighCubeAndEngageAuto;
@@ -243,7 +247,7 @@ private final XboxController xboxController0 = new XboxController(0);
     //m_arm.setDefaultCommand(new ArmHold(m_arm));
     //m_leds.setDefaultCommand(new SpiritColors(m_leds));
 
-    /*m_drivetrain.setDefaultCommand(
+    m_drivetrain.setDefaultCommand(
             new DriveWithSlow(
                 m_drivetrain, 
                 () -> -driver.getRawAxis(translationAxis), 
@@ -254,7 +258,7 @@ private final XboxController xboxController0 = new XboxController(0);
 
             )
         );
-    */
+    
         
     // Configure autonomous sendable chooser
       
@@ -268,6 +272,9 @@ private final XboxController xboxController0 = new XboxController(0);
     m_chooser.addOption("HighCubeTaxiThenEngage", new HighCubeAndTaxiThenEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("PickupCubeBLUELoadingStationV2", new PickupCubeBlueLoadingStationv2(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("PickupCubeREDLoadingStationV2", new PickupCubeRedLoadingStationv2(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("UNTESTED-HighConeAndTaxiAndPickupAndEngage", new HighConeAndTaxiAndPickupAndEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("UNTESTED-RedHighCubeAndTaxiAndPickupAndEngage", new RedHighCubeAndTaxiAndPickupAndEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("UNTESTED-BlueHighCubeAndTaxiAndPickupAndEngage", new BlueHighCubeAndTaxiAndPickupAndEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     SmartDashboard.putData("Auto Mode", m_chooser);
 
  
@@ -303,10 +310,10 @@ final JoystickButton xboxButtonRB = new JoystickButton(xboxController0, XboxCont
 final JoystickButton xboxButtonStart = new JoystickButton(xboxController0, XboxController.Button.kStart.value);
 final JoystickButton xboxButtonSelect = new JoystickButton(xboxController0, XboxController.Button.kBack.value);  
 
-xboxButtonB.onTrue(new CollectLoadingStationPose(m_elevator, m_intake, m_wrist, m_arm, m_leds));
+//xboxButtonB.onTrue(new CollectLoadingStationPose(m_elevator, m_intake, m_wrist, m_arm, m_leds));
 xboxButtonA.onTrue(new CollectFloorPoseParallelWithSequentialIntake(m_elevator, m_intake, m_wrist, m_arm, m_leds));
 xboxButtonY.onTrue(new HomePoseParallel(m_elevator, m_intake, m_wrist, m_arm));
-//xboxButtonX.onTrue(new CollectUprightPose(m_elevator, m_intake, m_wrist, m_arm, m_leds));  
+xboxButtonB.onTrue(new CollectUprightPose(m_elevator, m_intake, m_wrist, m_arm, m_leds));  
 xboxButtonX.onTrue(new CollectSinglePoseParallelWithSequentialIntake(m_elevator, m_intake, m_wrist, m_arm, m_leds));   
 xboxButtonLB.onTrue(new ClimbPoseBack(m_elevator, m_intake, m_wrist, m_arm));
 xboxButtonRB.onTrue(new IntakeMotorGo(m_intake, -0.2));
@@ -324,6 +331,7 @@ final JoystickButton xbox2ButtonLB = new JoystickButton(xboxController1, XboxCon
 final JoystickButton xbox2ButtonRB = new JoystickButton(xboxController1, XboxController.Button.kRightBumper.value);
 final JoystickButton xbox2ButtonStart = new JoystickButton(xboxController1,XboxController.Button.kStart.value);
 final JoystickButton xbox2ButtonSelect = new JoystickButton(xboxController1,XboxController.Button.kBack.value);
+final POVButton xbox2downPOVButton = new POVButton(xboxController1, 180);
 
 xbox2ButtonX.onTrue(new ScoreMiddleConePose(m_intake, m_wrist, m_arm, m_elevator));
 xbox2ButtonY.onTrue(new ScoreHighConePoseParallel(m_intake, m_wrist, m_arm, m_elevator));
@@ -333,6 +341,7 @@ xbox2ButtonLB.onTrue(new IntakeMotorStop(m_intake));
 xbox2ButtonStart.onTrue(new Purple(m_leds));
 xbox2ButtonSelect.onTrue(new Yellow(m_leds));
 xbox2ButtonRB.onTrue(new Reset(m_drivetrain));
+xbox2downPOVButton.onTrue(new ArmDownToScoreConeHigh(m_intake, m_wrist, m_arm, m_elevator));
 
 
 

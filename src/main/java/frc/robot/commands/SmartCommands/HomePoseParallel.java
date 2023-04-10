@@ -16,6 +16,8 @@ import frc.robot.Constants;
 import frc.robot.SetPoints;
 import frc.robot.commands.VoidBanisher;
 import frc.robot.commands.ArmCommands.ArmGoToPosition;
+import frc.robot.commands.ArmCommands.ArmPIDdown;
+import frc.robot.commands.ArmCommands.ArmPIDup;
 import frc.robot.commands.ElevatorCommands.ElevatorGoToPosition;
 import frc.robot.commands.WristCommands.WristGo;
 import frc.robot.commands.WristCommands.WristGoToPosition;
@@ -44,7 +46,9 @@ public class HomePoseParallel extends SequentialCommandGroup {
  
     addCommands(
     new ElevatorGoToPosition(elevator,SetPoints.ElevatorHome),
+    new ArmPIDup(arm),
     new WristArmParallel(wrist, arm, SetPoints.WristHome, SetPoints.armHome),
+    new ArmPIDdown(arm),
     // new IntakeMotorGo(intake, 0.2).withTimeout(0.3),
     // new IntakeCone(intake,.2),
     new IntakeMotorGo(intake, 0.05)

@@ -11,14 +11,16 @@ import frc.robot.Constants;
 import frc.robot.SetPoints;
 
 
-public class DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist extends CommandBase {
+public class Drive3SpeedsAtDistancesWithArmAndWrist extends CommandBase {
 
     double speed;
     double amount;
     double initialXSpeed;
     double secondXSpeed;
-    double ySpeed;
+    double thirdXSpeed;
+    double initialYSpeed;
     double secondYSpeed;
+    double thirdYSpeed;
     double armSetpoint;
     double wristSetpoint;
     drivetrain m_Drivetrain;
@@ -26,17 +28,21 @@ public class DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist extends 
     wrist m_wrist;
     double pitch;
     double intermediateDistance;
+    double secondDistance;
     double p;
     double initialMagnitude;
 
-    public DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain m_Drivetrain, arm m_arm, wrist m_wrist, double amount, double intermediateDistance, double initialXSpeed, double secondXSpeed, double ySpeed,double secondYSpeed, double armSetpoint, double wristSetpoint){
+    public Drive3SpeedsAtDistancesWithArmAndWrist(drivetrain m_Drivetrain, arm m_arm, wrist m_wrist, double amount, double intermediateDistance, double initialXSpeed, double secondXSpeed, double ySpeed,double secondYSpeed, double armSetpoint, double wristSetpoint, double thirdXSpeed, double thirdYSpeed, double secondDistance){
         this.m_Drivetrain = m_Drivetrain;
         this.m_arm = m_arm;
         this.m_wrist = m_wrist;
         this.initialXSpeed = initialXSpeed;
         this.secondXSpeed = secondXSpeed;
-        this.ySpeed = ySpeed;
+        this.thirdYSpeed = thirdYSpeed;
+        this.initialYSpeed = initialYSpeed;
+        this.secondDistance = secondDistance;
         this.secondYSpeed = secondYSpeed;
+        this.thirdYSpeed = thirdYSpeed;
         this.intermediateDistance = intermediateDistance;
         this.armSetpoint = armSetpoint;
         this.wristSetpoint = wristSetpoint;
@@ -58,25 +64,29 @@ public class DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist extends 
 
     @Override
     public void execute(){
-        //m_arm.armGoToPosition(armSetpoint);
-        //m_wrist.wristGoToPosition(wristSetpoint);
+        m_arm.armGoToPosition(armSetpoint);
+        m_wrist.wristGoToPosition(wristSetpoint);
         System.out.println("Drive Amount"+m_Drivetrain.getAverageEncoderValue());
         
         
-        if(!isAtRamp()){
-            m_arm.armGoToPosition(armSetpoint);
-            m_wrist.wristGoToPosition(wristSetpoint);
+        if(!isAtDist1()){
+        m_Drivetrain.drive(
+                new Translation2d(initialXSpeed, initialYSpeed).times(Constants.Swerve.maxSpeed),
+                0 * Constants.Swerve.maxAngularVelocity,
+                false,
+                true);
+        }
+
+        else if(!isAtDist2()){
             m_Drivetrain.drive(
-                new Translation2d(initialXSpeed, ySpeed).times(Constants.Swerve.maxSpeed),
+                new Translation2d(secondXSpeed, secondYSpeed).times(Constants.Swerve.maxSpeed),
                 0 * Constants.Swerve.maxAngularVelocity,
                 false,
                 true);
         }
         else{
-            m_arm.armGoToPosition(SetPoints.armPickupBack);
-            m_wrist.wristGoToPosition(SetPoints.WristCollectBack);
-            m_Drivetrain.drive(
-                new Translation2d(secondXSpeed,  secondYSpeed).times(Constants.Swerve.maxSpeed),
+        m_Drivetrain.drive(
+                new Translation2d(thirdXSpeed,  thirdYSpeed).times(Constants.Swerve.maxSpeed),
                 0 * Constants.Swerve.maxAngularVelocity,
                 false,
                 true);
@@ -92,21 +102,30 @@ public class DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist extends 
     @Override
     public boolean isFinished() {
 
-        return isAtDistance();
+        return isAtDist3();
     }
     
-    public boolean isAtRamp() {
+    public boolean isAtDist1() {
      if (m_Drivetrain.getAverageEncoderValue() > intermediateDistance){
-        System.out.println("DRIVE AMOUNT DONE");
+        System.out.println("DRIVE 1 AMOUNT DONE");
         return true;
       }
     else{
         return false;
         }
     }
-    public boolean isAtDistance() {
+    public boolean isAtDist2() {
+        if (m_Drivetrain.getAverageEncoderValue() > secondDistance){
+           System.out.println("DRIVE 2 AMOUNT DONE");
+           return true;
+         }
+       else{
+           return false;
+           }
+       }
+       public boolean isAtDist3() {
         if (m_Drivetrain.getAverageEncoderValue() > amount){
-           System.out.println("Total DRIVE AMOUNT DONE");
+           System.out.println("DRIVE 3 AMOUNT DONE");
            return true;
          }
        else{
