@@ -17,6 +17,7 @@ import frc.robot.commands.DrivetrainCommands.Drive;
 import frc.robot.commands.DrivetrainCommands.DriveAmount;
 import frc.robot.commands.DrivetrainCommands.DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist;
 import frc.robot.commands.DrivetrainCommands.DriveAmountWhileCollecting;
+import frc.robot.commands.DrivetrainCommands.TwoSpeedDriveFor2Piece;
 import frc.robot.commands.ElevatorCommands.ElevatorGoToPosition;
 import frc.robot.commands.IntakeCommands.IntakeCube;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
@@ -53,27 +54,28 @@ public class PickupCubeRedLoadingStationv2 extends SequentialCommandGroup {
         new IntakeMotorGo(intake, .3),
 
         //go collect pos
-        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
+        new TwoSpeedDriveFor2Piece(drivetrain, arm, wrist, 
         190, 165,
          -0.35, -0.12,
          -0.01, -0.02, 
          SetPoints.armPickupBack, SetPoints.WristCollectBack),
 
         //score
-        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
+        new TwoSpeedDriveFor2Piece(drivetrain, arm, wrist, 
         185, 80, 
         0.4, 0.25,
         0.02, 0, 
         SetPoints.armPlaceConeMiddleFront, SetPoints.WristScoreFrontCube),
 
 
-        new IntakeMotorGo(intake, -0.4).withTimeout(0.1),
+        new IntakeMotorGo(intake, -0.4).withTimeout(0.1)/*,
         
-        new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
+        new TwoSpeedDriveFor2Piece(drivetrain, arm, wrist, 
         20, 8,
          -0.2, -0.04,
          -0.1, 0, 
          SetPoints.armHome, SetPoints.WristHome)
+         */
         );
     }
 

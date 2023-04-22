@@ -11,7 +11,7 @@ public final class SetPoints {
     public static double armFront = -25;
     public static double armBack = -25;
     public static double armPlaceConeMiddleFront = -24;
-    public static double armPlaceConeHighFront = -24;
+    public static double armPlaceConeHighFront = -23;
     public static double ArmDownToScoreConeHigh = -26;
     public static double armLoadingStation = -22;
     public static double armHome = 0;
@@ -24,11 +24,12 @@ public final class SetPoints {
 
     //ALL ELEVATOR SETPOINTS NEED TO BE NEGATIVE!!!!!!!!!!!!!!!!
     public static double ElevatorHome = 0;
-    public static double ElevatorMiddle = -26000 * 1.588235294;
+    public static double ElevatorMiddle = -27000 * 1.588235294;
     public static double ElevatorHigh = -70000 * 1.588235294;
     public static double ElevatorMiddleCube = -15000*1.588 * 0;
     public static double ElevatorHighCube = -53000 * 1.588235294;
     public static double ElevatorLoadingStation = -46000 * 1.588235294;
+    public static double ElevatorSafePoint = -6;
 
     
 

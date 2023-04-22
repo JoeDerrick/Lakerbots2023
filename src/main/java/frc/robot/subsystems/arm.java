@@ -303,8 +303,8 @@ public void setArmPIDdown(){
   //SmartDashboard.putNumber("SetPoint", setPoint);
   //SmartDashboard.putNumber("Process Variable", processVariable);
   //SmartDashboard.putNumber("Output", armMotorLead.getAppliedOutput());
-  SmartDashboard.putNumber("Position", magEncoder.getPosition());
-  SmartDashboard.putNumber("Arm Velocity", armGetVelocity());
+  //SmartDashboard.putNumber("Position", magEncoder.getPosition());
+  //SmartDashboard.putNumber("Arm Velocity", armGetVelocity());
  // SmartDashboard.putNumber("Amps yo", armGetCurrent());
   
 

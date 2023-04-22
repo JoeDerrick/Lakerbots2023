@@ -207,8 +207,8 @@ public class elevator extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         //System.out.println(+elevatorGetVelocity());
-        SmartDashboard.putNumber("Elevator Velocity", elevatorGetVelocity());
-        SmartDashboard.putNumber("Elevator Position", elevatorGetPosition());
+        //SmartDashboard.putNumber("Elevator Velocity", elevatorGetVelocity());
+        //SmartDashboard.putNumber("Elevator Position", elevatorGetPosition());
     }
 
     @Override
