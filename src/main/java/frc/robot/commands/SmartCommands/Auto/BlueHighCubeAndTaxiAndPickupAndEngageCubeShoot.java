@@ -53,7 +53,7 @@ public class BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot extends SequentialCo
     new edu.wpi.first.wpilibj2.command.WaitCommand(0.5),
     new ArmGoToPositionAndHoldInstant(intake, arm, SetPoints.armPlaceConeHighFront),
     new Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards(drivetrain, 0.35, -0.6, 0.3, 65, 55).withTimeout(5),
-    new ScoreMiddleCubePose(intake, wrist, arm, elevator),
+    new ScoreMiddleCubePose(intake, wrist, arm, elevator).withTimeout(0.6),
     new IntakeMotorGo(intake, -1).withTimeout(1),
     new IntakeMotorGo(intake, 0)
     

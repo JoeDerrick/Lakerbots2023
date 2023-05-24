@@ -33,6 +33,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.DrivetrainCommands.DriveWithSlow;
 import frc.robot.commands.DrivetrainCommands.Reset;
+import frc.robot.commands.SmartCommands.Auto.AutoDrive;
 import frc.robot.commands.SmartCommands.Auto.BlueHighCubeAndTaxiAndPickupAndEngage;
 import frc.robot.commands.SmartCommands.Auto.BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot;
 import frc.robot.commands.SmartCommands.Auto.HighConeAndTaxiAndPickupAndEngage;
@@ -132,7 +133,7 @@ private final XboxController xboxController0 = new XboxController(0);
     m_chooser.addOption("HighCube", new HighCube(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("HighConeBackup", new HighConeBackup(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("weherfghgeryj", new BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
-
+    m_chooser.addOption("AutoDrive", new AutoDrive(m_leds, m_drivetrain));
     m_chooser.addOption("HighCubeAndEngage", new HighCubeAndEngageAuto(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     //add blue far, red, and red far
     m_chooser.addOption("HighCubeTaxiThenEngage", new HighCubeAndTaxiThenEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
