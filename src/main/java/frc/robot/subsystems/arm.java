@@ -206,7 +206,7 @@ public void armStop(){
     armMotorFollow.set(0);
 }
 
-/
+
 public void armGo(){
     armMotorLead.set(0.6);
     armMotorFollow.set(0.6);

@@ -52,9 +52,7 @@ public class IdkWhatToNameThis extends CommandBase {
     public void initialize() {
         
         for(int i = 0; i < m_leds.getStripLength(); i++){
-            for(int j = 0; j < m_leds.getStripLength(); j++){
-                m_leds.setNode(j, 0, 0, 0);
-            }
+            for(int j = 0; j < m_leds.getStripLength(); j++){m_leds.setNode(j, 0, 0, 0);}
             for(int ii = 0; i < 2; i++){m_leds.setNode(i+ii, 0, 0, 255);}
 
         }
