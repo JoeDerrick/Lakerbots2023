@@ -19,6 +19,7 @@ public class Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards extends Comma
     double pitch;
     double threshhold = 5;
     double p;
+    boolean isdone;
 
     public Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards(drivetrain m_Drivetrain, double initialXspeed, double initialYspeed, double secondXspeed, double amount, double intermediateDistance){
         this.m_Drivetrain = m_Drivetrain;
@@ -29,6 +30,7 @@ public class Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards extends Comma
         this.amount = amount;
         addRequirements(m_Drivetrain);
         p = 0.035; //0.04 
+        isdone = false;
     }
 
     @Override
@@ -58,13 +60,16 @@ public class Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards extends Comma
                 true);
         }
         else{
-        m_Drivetrain.drive(
-                new Translation2d(initialXspeed * p * pitch,  0).times(Constants.Swerve.maxSpeed),
-                0 * Constants.Swerve.maxAngularVelocity,
-                false,
-                true);
-                System.out.println("In Pitch Mode");
-        }
+            if(Math.abs(pitch) < 3){
+                isdone = true;
+            }
+            m_Drivetrain.drive(
+                    new Translation2d(initialXspeed * p * pitch,  0).times(Constants.Swerve.maxSpeed),
+                    0 * Constants.Swerve.maxAngularVelocity,
+                    false,
+                    true);
+                    System.out.println("In Pitch Mode");
+            }
     }
     
     @Override
@@ -76,7 +81,7 @@ public class Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards extends Comma
     @Override
     public boolean isFinished() {
 
-        return false;
+        return isdone;
     }
     
     public boolean isDocked() {

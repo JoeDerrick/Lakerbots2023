@@ -16,10 +16,12 @@ import frc.robot.commands.ArmCommands.ArmGoToPositionAndHoldInstant;
 import frc.robot.commands.DrivetrainCommands.Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards;
 import frc.robot.commands.DrivetrainCommands.Drive2AmountsWithStrafeAndDriveUntilBalancedBackwardsWithFinish;
 import frc.robot.commands.DrivetrainCommands.DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist;
+import frc.robot.commands.DrivetrainCommands.DriveUntilBalanced;
 import frc.robot.commands.ElevatorCommands.ElevatorGoToPosition;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 
 import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePose;
+import frc.robot.commands.SmartCommands.Scores.ScoreHighCubePoseFast;
 import frc.robot.commands.SmartCommands.Scores.ScoreMiddleCubePose;
 import frc.robot.commands.WristCommands.WristGoToPosition;
 import frc.robot.subsystems.elevator;
@@ -40,23 +42,23 @@ public class BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot extends SequentialCo
     public BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
 
     addCommands(
-        
-    new ScoreHighCubePose(intake, wrist, arm, elevator),
-    new IntakeMotorGo(intake, -0.2).withTimeout(.1),
+
+    new ScoreHighCubePoseFast(intake, wrist, arm, elevator),
+    new IntakeMotorGo(intake, -0.2).withTimeout(.25),
     new ElevatorGoToPosition(elevator, SetPoints.ElevatorHome),
     new IntakeMotorGo(intake, 0.5),
     new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
     180, 20,
-     -0.12, -0.37, 
+     -0.12, -0.37,
     0,0.06,
     SetPoints.armChargeBack, SetPoints.WristChargeBack),
     new edu.wpi.first.wpilibj2.command.WaitCommand(0.5),
     new ArmGoToPositionAndHoldInstant(intake, arm, SetPoints.armPlaceConeHighFront),
     new Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards(drivetrain, 0.35, -0.6, 0.3, 65, 55).withTimeout(5),
     new ScoreMiddleCubePose(intake, wrist, arm, elevator).withTimeout(0.6),
-    new IntakeMotorGo(intake, -1).withTimeout(1),
-    new IntakeMotorGo(intake, 0)
-    
+    new IntakeMotorGo(intake, -1).withTimeout(0.5),
+    new IntakeMotorGo(intake, 0).withTimeout(0.01),
+    new DriveUntilBalanced(drivetrain, 0.35)
     
     );
     }
