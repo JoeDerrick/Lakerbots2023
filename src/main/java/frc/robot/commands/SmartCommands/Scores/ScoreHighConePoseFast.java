@@ -47,7 +47,7 @@ public class ScoreHighConePoseFast extends SequentialCommandGroup {
     addCommands(
     new ArmGoToPositionAndHoldInstant(intake, arm, SetPoints.armPlaceConeHighFront),
     new WristGoToPositionAndHold(intake, wrist, SetPoints.WristScoreFront),
-new IsElevatorSafe(arm),
+    new IsElevatorSafe(arm),
     new ElevatorGoToPositionAndHold(intake, elevator, SetPoints.ElevatorHigh)
 
     );

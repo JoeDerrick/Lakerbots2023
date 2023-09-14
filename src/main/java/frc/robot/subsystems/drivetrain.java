@@ -8,7 +8,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -25,11 +26,22 @@ public class drivetrain extends SubsystemBase {
     public drivetrain m_drivetrain;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    
+    //odometry
+    private PIDController m_XPid;
+    private PIDController m_YPid;
+    private PIDController m_ThetaPid;
+
+    private double m_driveToTargetTolerance = Constants.Swerve.DriveToTargetTolerance;
 
     public drivetrain() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
+        m_XPid = new PIDController(0.6, 0.05, 0.1);
+        m_YPid = new PIDController(0.6, 0.05, 0.1);
+        m_ThetaPid = new PIDController(0.01, 0.0001, 0.00);
+        
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -117,6 +129,53 @@ public class drivetrain extends SubsystemBase {
         }
     }
 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///----------------------------- Following section is for odometry------------------------------------
+/// most of this code is from 131 CHAOS (thanks btw)
+//added 9/13/23
+
+
+
+    //checker if its in tolerance of the target
+    public boolean atTarget() {
+        boolean isXTolerable = Math.abs(getPose().getX() - m_XPid.getSetpoint()) <= m_driveToTargetTolerance;
+        boolean isYTolerable = Math.abs(getPose().getY() - m_YPid.getSetpoint()) <= m_driveToTargetTolerance;
+        return isXTolerable && isYTolerable && m_ThetaPid.atSetpoint();
+    
+      }
+    //target setter
+    public void setTarget(double x, double y, Rotation2d angle) {
+        m_XPid.setSetpoint(x);
+        m_YPid.setSetpoint(y);
+        m_ThetaPid.setSetpoint(angle.getDegrees());
+      }
+
+    //move to target
+    public void moveToTarget(double maxTranslationSpeedPercent) {
+        Pose2d pose = getPose();
+
+        //mathUtil.clamp has the purpose of making sure the speeds are within a specific range,
+        // if x is below the min the min will be used for x
+        //if x is above the max the max will be used for x
+        //if x is within the range just use x
+        double x = MathUtil.clamp(m_XPid.calculate(pose.getX()), -maxTranslationSpeedPercent, maxTranslationSpeedPercent);
+        double y = MathUtil.clamp(m_YPid.calculate(pose.getY()), -maxTranslationSpeedPercent, maxTranslationSpeedPercent);
+        double angle = m_ThetaPid.calculate(pose.getRotation().getDegrees());
+        moveFieldRelativeForPID(x, y, angle);
+      }
+
+      //
+    public void moveFieldRelativeForPID(double xMetersPerSecond, double yMetersPerSecond, double omegaRadianPerSecond){
+        drive(new Translation2d(xMetersPerSecond, yMetersPerSecond), omegaRadianPerSecond, true, true);
+      }
+
+
+
+
+
+
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
     }
@@ -124,6 +183,9 @@ public class drivetrain extends SubsystemBase {
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
@@ -175,6 +237,7 @@ public class drivetrain extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
         }
+        System.out.println(getPose());
         //---- 0 = Back Right
         //---- 1 = Front right
         //---- 2 = Back Left

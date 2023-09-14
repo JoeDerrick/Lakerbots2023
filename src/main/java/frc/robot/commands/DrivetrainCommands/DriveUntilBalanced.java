@@ -32,7 +32,7 @@ public class DriveUntilBalanced extends CommandBase {
     @Override
     public void initialize(){
         m_Drivetrain.resetEncoders();
-        System.out.println("DRIVE AMOUNT INIT");
+        System.out.println("DriveUntilBaalancedINIT");
     }
 
     @Override
@@ -58,7 +58,8 @@ public class DriveUntilBalanced extends CommandBase {
     
     @Override
     public void end(boolean interrupted) {
-        System.out.println("ended");
+        System.out.println("DriveUntilBaalancedEND");
+
         m_Drivetrain.drive(new Translation2d(0, 0), 0, false, false);
     }
 

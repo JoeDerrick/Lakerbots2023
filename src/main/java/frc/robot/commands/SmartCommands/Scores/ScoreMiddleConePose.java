@@ -46,6 +46,7 @@ public class ScoreMiddleConePose extends SequentialCommandGroup {
     new WristGoToPosition(wrist, SetPoints.WristScoreFront),
     new IsElevatorSafe(arm),
     new ElevatorGoToPosition(elevator, SetPoints.ElevatorMiddle)
+    
 
     );
     }

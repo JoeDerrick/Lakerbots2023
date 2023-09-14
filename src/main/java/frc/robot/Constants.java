@@ -55,6 +55,7 @@ public final class Constants {
         /* Angle Encoder Invert */
         public static final boolean canCoderInvert = chosenModule.canCoderInvert;
 
+        //NOT USED ANYWHERE NOT REAL DEADZONE 9/9/2023
         //DRIVETRAIN DEADZONE
         public static final double deadband = 0.25;
 
@@ -95,7 +96,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 5.5; // changed from 4.5 to 5.5     9/9/2023
 
         public static final double turboSpeed = 7;
 
@@ -158,7 +159,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 12;
             public static final int canCoderID = 4;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(323.0);//68 deg
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(68.0);//68 deg
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }

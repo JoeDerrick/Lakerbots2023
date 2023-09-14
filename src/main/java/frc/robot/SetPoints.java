@@ -46,7 +46,7 @@ public final class SetPoints {
     public static double WristCollect = 24;//30
     public static double WristBack = 35;
     public static double WristCharge = 40;
-    public static double WristSingle = 35;
+    public static double WristSingle = 36;//35 9/9/23
 
 
 

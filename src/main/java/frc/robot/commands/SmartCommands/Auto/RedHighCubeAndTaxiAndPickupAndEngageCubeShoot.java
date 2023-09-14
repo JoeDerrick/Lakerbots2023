@@ -36,11 +36,11 @@ import frc.robot.subsystems.leds;
 /**
  *
  */
-public class BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot extends SequentialCommandGroup {
+public class RedHighCubeAndTaxiAndPickupAndEngageCubeShoot extends SequentialCommandGroup {
 
   
 
-    public BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
+    public RedHighCubeAndTaxiAndPickupAndEngageCubeShoot(intake intake, wrist wrist, arm arm, elevator elevator, drivetrain drivetrain, leds leds){
 
     addCommands(
 
@@ -51,17 +51,17 @@ public class BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot extends SequentialCo
     new DriveAmountAtDifferentSpeedsAfterDistanceMovingArmAndWrist(drivetrain, arm, wrist, 
     180, 20,
      -0.12, -0.37,
-    0,0.04,
+    -0,-0.04,
     SetPoints.armChargeBack, SetPoints.WristChargeBack),
     new edu.wpi.first.wpilibj2.command.WaitCommand(0.1),
     new ArmGoToPositionAndHoldInstant(intake, arm, SetPoints.armPlaceConeHighFront),
-    new Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards(drivetrain, 0.35, -0.6, 0.3, 65, 55).withTimeout(5),
+    new Drive2AmountsWithStrafeAndDriveUntilBalancedBackwards(drivetrain, 0.35, 0.6, 0.3, 65, 55).withTimeout(5),
     new ScoreMiddleCubePose(intake, wrist, arm, elevator).withTimeout(0.6),
     new IntakeMotorGo(intake, -1).withTimeout(0.2),
     new IntakeMotorGo(intake, 0).withTimeout(0.01),
-//new DriveUntilBalanced(drivetrain, 0.25),
+    //new DriveUntilBalanced(drivetrain, 0.25),
     new DriveAmountAndDriveUntilBalancedBackwards(drivetrain, 0.25, 0)
-        
+    
     );
     }
 

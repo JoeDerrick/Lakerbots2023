@@ -24,6 +24,7 @@ import frc.robot.commands.SmartCommands.Scores.ScoreMiddleConePose;
 import frc.robot.commands.SmartCommands.Scores.ScoreMiddleCubePoseParallel;
 import frc.robot.commands.SmartCommands.Auto.PickupCubeRedLoadingStationv2;
 import frc.robot.commands.SmartCommands.Auto.RedHighCubeAndTaxiAndPickupAndEngage;
+import frc.robot.commands.SmartCommands.Auto.RedHighCubeAndTaxiAndPickupAndEngageCubeShoot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -132,7 +133,9 @@ private final XboxController xboxController0 = new XboxController(0);
     m_chooser.setDefaultOption("HighCubeTaxiThenEngage", new HighCubeAndTaxiThenEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("HighCube", new HighCube(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("HighConeBackup", new HighConeBackup(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
-    m_chooser.addOption("weherfghgeryj", new BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("MEGA_SENDIT-Cube shoot auto   BLUE", new BlueHighCubeAndTaxiAndPickupAndEngageCubeShoot(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    m_chooser.addOption("MEGA_SENDIT-Cube shoot auto   RED", new RedHighCubeAndTaxiAndPickupAndEngageCubeShoot(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+
     m_chooser.addOption("AutoDrive", new AutoDrive(m_leds, m_drivetrain));
     m_chooser.addOption("HighCubeAndEngage", new HighCubeAndEngageAuto(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     //add blue far, red, and red far
@@ -200,6 +203,7 @@ xbox2ButtonStart.onTrue(new Purple(m_leds));
 xbox2ButtonSelect.onTrue(new Yellow(m_leds));
 xbox2ButtonRB.onTrue(new Reset(m_drivetrain));
 xbox2downPOVButton.onTrue(new ArmDownToScoreConeHigh(m_intake, m_wrist, m_arm, m_elevator));
+
 
 
 
