@@ -25,6 +25,15 @@ public final class Constants {
     public static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.048, 0, 1.0);
 
     public static final class Swerve {
+
+
+
+        //odometry
+        public static final double DriveToTargetTolerance = 0.03;
+        public static final double MaxTranslationPIDSpeedPercent = 1.0;
+
+
+
         public static final int pigeonID = 13;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 

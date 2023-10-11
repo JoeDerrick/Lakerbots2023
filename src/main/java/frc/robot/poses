@@ -1,0 +1,42 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
+/** Add your docs here. */
+public class DrivePose {
+    private static final double FieldWidthFromCADMeters = 16.522;
+    private static final double FieldMidpointMeters = FieldWidthFromCADMeters / 2;
+
+   
+    public final Pose2d m_redPose;
+    public final Pose2d m_bluePose;
+    public final String m_redName;
+    public final String m_blueName;
+
+    private DrivePose(String name, double redXMeters, double redYMeters, Rotation2d redAngle) {
+        m_redPose = new Pose2d(redXMeters, redYMeters, redAngle);
+        m_bluePose = mirrorPoseOnField(m_redPose);
+        m_redName = name + "_RED";
+        m_blueName = name + "_BLUE";
+        DrivePoses.put(name, this);
+    }
+
+
+    
+
+    // Score Positions (from red perspective)
+    private static final double ScoreXMeters = 1.855;
+    private static final Rotation2d ScoreAngle = Rotation2d.fromDegrees(180);
+    public static final DrivePose Test = new DrivePose("Test", 2.0,0.0,154.0);
+   
+}

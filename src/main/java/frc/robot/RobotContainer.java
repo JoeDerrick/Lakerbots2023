@@ -6,6 +6,7 @@ import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 import frc.robot.commands.IntakeCommands.IntakeMotorStop;
 import frc.robot.commands.IntakeCommands.ScoreWithTrigger;
 import frc.robot.subsystems.*;
+//import frc.robot.
 import frc.robot.subsystems.drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,7 +32,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.DrivetrainCommands.DriveToTarget;
 import frc.robot.commands.DrivetrainCommands.DriveWithSlow;
 import frc.robot.commands.DrivetrainCommands.Reset;
 import frc.robot.commands.SmartCommands.Auto.AutoDrive;
@@ -99,6 +105,8 @@ private final XboxController xboxController0 = new XboxController(0);
     SmartDashboard.putData("ScoreHighCubeFast :)", new ScoreHighCubePoseFast(m_intake, m_wrist, m_arm, m_elevator));
     SmartDashboard.putData("ScoreHighCONEFast >:)", new ScoreHighConePoseFast(m_intake, m_wrist, m_arm, m_elevator));
     SmartDashboard.putData("SHOOT DA CUBE", new IntakeMotorGo(m_intake, -1));
+    SmartDashboard.putData("DriveToTarget", new DriveToTarget(m_drivetrain, m_drivetrain.getPose(), new Pose2d(new Translation2d(3,3), new Rotation2d(0)), 0.3));
+    //SmartDashboard.putData("reset odometry", new ResetOdometry(m_drivetrain));
 
 
     
@@ -126,6 +134,7 @@ private final XboxController xboxController0 = new XboxController(0);
 
             )
         );
+        
     
         
     // Configure autonomous sendable chooser
@@ -145,8 +154,8 @@ private final XboxController xboxController0 = new XboxController(0);
     m_chooser.addOption("YOLO-HighConeAndTaxiAndPickupAndEngage", new HighConeAndTaxiAndPickupAndEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("SENDIT-RedHighCubeAndTaxiAndPickupAndEngage", new RedHighCubeAndTaxiAndPickupAndEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("SENDIT-BlueHighCubeAndTaxiAndPickupAndEngage", new BlueHighCubeAndTaxiAndPickupAndEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
+    //m_chooser.addOption("DriveToTarget", new DriveToTarget(m_drivetrain, poses, translationAxis, driverRightTrig));
     SmartDashboard.putData("Auto Mode", m_chooser);
-
  
   }
 

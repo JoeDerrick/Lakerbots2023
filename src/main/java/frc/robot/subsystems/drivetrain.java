@@ -18,6 +18,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import java.util.List;
+import java.util.function.ToDoubleFunction;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 
 public class drivetrain extends SubsystemBase {
@@ -31,6 +34,8 @@ public class drivetrain extends SubsystemBase {
     private PIDController m_XPid;
     private PIDController m_YPid;
     private PIDController m_ThetaPid;
+    public double setPoint;
+    public double[] Speeds = {0,0};
 
     private double m_driveToTargetTolerance = Constants.Swerve.DriveToTargetTolerance;
 
@@ -38,10 +43,9 @@ public class drivetrain extends SubsystemBase {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
-        m_XPid = new PIDController(0.6, 0.05, 0.1);
-        m_YPid = new PIDController(0.6, 0.05, 0.1);
-        m_ThetaPid = new PIDController(0.01, 0.0001, 0.00);
-        
+        m_XPid = new PIDController(0.6, 0, 0);
+        m_YPid = new PIDController(0.6, 0, 0);
+        m_ThetaPid = new PIDController(0.01, 0, 0);
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -139,21 +143,21 @@ public class drivetrain extends SubsystemBase {
 
 
     //checker if its in tolerance of the target
-    public boolean atTarget() {
+    public boolean CHAOSatTarget() {
         boolean isXTolerable = Math.abs(getPose().getX() - m_XPid.getSetpoint()) <= m_driveToTargetTolerance;
         boolean isYTolerable = Math.abs(getPose().getY() - m_YPid.getSetpoint()) <= m_driveToTargetTolerance;
         return isXTolerable && isYTolerable && m_ThetaPid.atSetpoint();
     
       }
     //target setter
-    public void setTarget(double x, double y, Rotation2d angle) {
+    public void CHAOSsetTarget(double x, double y, Rotation2d angle) {
         m_XPid.setSetpoint(x);
         m_YPid.setSetpoint(y);
         m_ThetaPid.setSetpoint(angle.getDegrees());
       }
 
     //move to target
-    public void moveToTarget(double maxTranslationSpeedPercent) {
+    public void CHAOSmoveToTarget(double maxTranslationSpeedPercent) {
         Pose2d pose = getPose();
 
         //mathUtil.clamp has the purpose of making sure the speeds are within a specific range,
@@ -163,11 +167,11 @@ public class drivetrain extends SubsystemBase {
         double x = MathUtil.clamp(m_XPid.calculate(pose.getX()), -maxTranslationSpeedPercent, maxTranslationSpeedPercent);
         double y = MathUtil.clamp(m_YPid.calculate(pose.getY()), -maxTranslationSpeedPercent, maxTranslationSpeedPercent);
         double angle = m_ThetaPid.calculate(pose.getRotation().getDegrees());
-        moveFieldRelativeForPID(x, y, angle);
+        CHAOSmoveFieldRelativeForPID(x, y, angle);
       }
 
-      //
-    public void moveFieldRelativeForPID(double xMetersPerSecond, double yMetersPerSecond, double omegaRadianPerSecond){
+      //fancy drive
+    public void CHAOSmoveFieldRelativeForPID(double xMetersPerSecond, double yMetersPerSecond, double omegaRadianPerSecond){
         drive(new Translation2d(xMetersPerSecond, yMetersPerSecond), omegaRadianPerSecond, true, true);
       }
 
@@ -175,17 +179,78 @@ public class drivetrain extends SubsystemBase {
 
 
 
-
+    //pose getter
+    //pose is a x y and theta position
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
     }
 
-    public void resetOdometry(Pose2d pose) {
+    //zero it
+    public void CHAOSresetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
+    
+        //TODO: add this
+    //removed until we figure out if the default module config will work
+    /* 
+    public void driveToPositionInit() {
+
+        SwerveModule module0 = mSwerveMods[0];
+        SwerveModule module1 = mSwerveMods[1];
+        SwerveModule module2 = mSwerveMods[2];
+        SwerveModule module3 = mSwerveMods[3];
+        module0.driveToPositionInit();
+        module1.driveToPositionInit();
+        module2.driveToPositionInit();
+        module3.driveToPositionInit();
+      }
+      */
+
+      public void CHAOSresetPids() {
+        m_XPid.reset();
+        m_YPid.reset();
+        m_ThetaPid.reset();
+        CHAOSsetDriveTranslationTolerance(Constants.Swerve.DriveToTargetTolerance);
+      }
+      public void CHAOSsetDriveTranslationTolerance(double tolerance) {
+        m_driveToTargetTolerance = tolerance;
+      }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//new pid code by me
+
+public void setSetpoint(double x, double y){
+    m_XPid.setSetpoint(x);
+    m_YPid.setSetpoint(y);
+}
+
+public double[] getSpeeds(double currentX, double currentY){
+    Speeds[0] = m_XPid.calculate(currentX);
+    Speeds[1] = m_YPid.calculate(currentY);
+    return(Speeds);
+}
+
+public void setTolerence(double t){
+    m_XPid.setTolerance(t);
+    m_YPid.setTolerance(t);
+}
+
+public boolean isAtDesired(){
+    if(m_XPid.atSetpoint() && m_YPid.atSetpoint()){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+
+
+
+
 
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
@@ -227,6 +292,11 @@ public class drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
+
+    SmartDashboard.putNumber("odometry x", getPose().getX());
+    SmartDashboard.putNumber("odometry y", getPose().getY());
+    SmartDashboard.putNumber("odometry th", getPose().getRotation().getDegrees());
+    
         swerveOdometry.update(getYaw(), getModulePositions());
 
 
@@ -237,7 +307,7 @@ public class drivetrain extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
         }
-        System.out.println(getPose());
+        //System.out.println(getPose());
         //---- 0 = Back Right
         //---- 1 = Front right
         //---- 2 = Back Left

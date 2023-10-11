@@ -47,7 +47,7 @@ public class CollectSinglePoseParallelWithSequentialIntake extends SequentialCom
     //new IntakeMotorGoForCollecting(intake, 0.4).withTimeout(0.8),
     new IntakeGamePieceWithThreshold(intake,.4),
     new Green(leds),
-    new IntakeMotorGo(intake, 0.1)
+    new IntakeMotorGo(intake, 0.18)
 
 
     );
