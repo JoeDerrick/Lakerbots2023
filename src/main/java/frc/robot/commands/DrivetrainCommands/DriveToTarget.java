@@ -19,8 +19,8 @@ public class DriveToTarget extends CommandBase {
     Translation2d calculatedTranslation;
     double calcuatedRotation;
     double speed;
-    double minSpeed = .05;
-    double maxSpeed = .3;
+    double minSpeed = -1.5;
+    double maxSpeed = 1.5;
  
 
     public DriveToTarget(drivetrain m_Drivetrain, Pose2d currentPose, Pose2d desiredPose, double speed) {
@@ -35,10 +35,12 @@ public class DriveToTarget extends CommandBase {
 
     @Override
     public void initialize() {
-    m_Drivetrain.setTolerence(.1);
+    m_Drivetrain.setTolerence(.01);
     m_Drivetrain.setSetpoint(desiredPose.getX(), desiredPose.getY());
-    System.out.println(desiredPose.getX());
-    System.out.println(desiredPose.getY());
+    System.out.println("Desired x"+desiredPose.getX());
+    System.out.println("Desireed y"+desiredPose.getY());
+
+    
 
 
       
@@ -50,14 +52,29 @@ public class DriveToTarget extends CommandBase {
     @Override
     public void execute() {
       currentPose = m_Drivetrain.getPose();
-      System.out.println("executing driveTarget");
-      System.out.println("x:"+currentPose.getX());
-      System.out.println("y"+currentPose.getY());
-      calculatedTranslation = new Translation2d(
-        MathUtil.clamp(speed*m_Drivetrain.getSpeeds(currentPose.getX(),currentPose.getY())[0]*(desiredPose.getX()-currentPose.getX()), minSpeed, maxSpeed), 
-        MathUtil.clamp(speed*m_Drivetrain.getSpeeds(currentPose.getX(),currentPose.getY())[1]*(desiredPose.getY()-currentPose.getY()), minSpeed, maxSpeed)
-      );
+      //System.out.println("executing driveTarget X:"+currentPose.getX() + "Y:" +currentPose.getY());
       
+      //-- Calculate the Error for both x and y and display here---//
+
+      //System.out.println("x:"+currentPose.getX());
+      //System.out.println("y"+currentPose.getY());
+      
+      calculatedTranslation = new Translation2d(
+        MathUtil.clamp(speed*m_Drivetrain.getSpeeds(currentPose.getX(),currentPose.getY())[0], minSpeed, maxSpeed), 
+        MathUtil.clamp(speed*m_Drivetrain.getSpeeds(currentPose.getX(),currentPose.getY())[1], minSpeed, maxSpeed)
+      );
+
+
+      System.out.println("exe drive target X-"+calculatedTranslation.getX()+" Y-"+calculatedTranslation.getY());
+      
+      /*calculatedTranslation = new Translation2d(
+        MathUtil.clamp(speed*m_Drivetrain.getSpeeds(currentPose.getX(),currentPose.getY())[0]*(desiredPose.getX()-currentPose.getX()), minSpeed, maxSpeed), 
+        MathUtil.clamp(speed*m_Drivetrain.getSpeeds(currentPose.getX(),currentPose.getY())[1]*(desiredPose.getY()-currentPose.getY()), minSpeed, maxSpeed) */
+        //-------------speed*?---- why speed times?
+     
+      
+
+
       m_Drivetrain.drive(calculatedTranslation, 0, true, true);
 
 

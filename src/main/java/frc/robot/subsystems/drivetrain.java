@@ -1,3 +1,6 @@
+
+
+
 package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
@@ -18,6 +21,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.music.Orchestra;
+
 import java.util.List;
 import java.util.function.ToDoubleFunction;
 
@@ -36,6 +42,7 @@ public class drivetrain extends SubsystemBase {
     private PIDController m_ThetaPid;
     public double setPoint;
     public double[] Speeds = {0,0};
+    public double IZone = 0.5;
 
     private double m_driveToTargetTolerance = Constants.Swerve.DriveToTargetTolerance;
 
@@ -43,9 +50,11 @@ public class drivetrain extends SubsystemBase {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
-        m_XPid = new PIDController(0.6, 0, 0);
-        m_YPid = new PIDController(0.6, 0, 0);
+        m_XPid = new PIDController(2.4, 0.001, 0);
+        m_YPid = new PIDController(2.4, 0.001, 0);
         m_ThetaPid = new PIDController(0.01, 0, 0);
+        m_XPid.setIntegratorRange(-IZone, IZone);
+        m_YPid.setIntegratorRange(-IZone, IZone);
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -60,7 +69,9 @@ public class drivetrain extends SubsystemBase {
         }
     }
 
+
     
+
 
     public void resetEncoders() {
         SwerveModule module0 = mSwerveMods[0];

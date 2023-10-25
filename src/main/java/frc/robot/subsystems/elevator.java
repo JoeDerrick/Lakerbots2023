@@ -16,6 +16,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.music.Orchestra;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -34,7 +35,7 @@ import frc.robot.Instrum;
  */
 public class elevator extends SubsystemBase {
   
-    private WPI_TalonFX elevatorMotor;
+    public WPI_TalonFX elevatorMotor;
     
     public double setpoint;
     
@@ -52,7 +53,12 @@ public class elevator extends SubsystemBase {
     /** 
 
     */
+
+    public Orchestra music;
+
     public elevator() {
+
+    music = new Orchestra();
         
     elevatorMotor = new WPI_TalonFX(14);
     //elevatorMotor.configForwardLimitSwitchSource(TalonFXFeedbackDevice.RemoteSensor0, true);
@@ -94,10 +100,27 @@ public class elevator extends SubsystemBase {
 
     /* Zero the sensor once on robot boot up */
     elevatorMotor.setSelectedSensorPosition(0, ElevatorConstants.kPIDLoopIdx, ElevatorConstants.kTimeoutMs);
-   
 
-   
     }
+
+
+    //fuctions for music chirp generator
+    public void musicAddTalon(){
+        music.addInstrument(elevatorMotor);
+    }
+    public void musicload(String path){
+        music.loadMusic(path);
+    }
+    public void musicplay(){
+        music.play();
+    }
+    public void musicstop(){
+        music.stop();
+    }
+    public boolean isFinishedPlayingMusic(){
+        return music.isPlaying(); // should this return the opposite of isplaying?
+    }
+
 
     public void elevatorSetVelocity(double velocity){
         elevatorMotor.configMotionCruiseVelocity(velocity, ElevatorConstants.kTimeoutMs);

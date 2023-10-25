@@ -196,6 +196,9 @@ public void armHold(){
     m_pidController.setReference(setPoint, CANSparkMax.ControlType.kSmartMotion);
 }
 
+
+
+
 public void armJoystick(double y){
     armMotorLead.set(y); // slowed down arm for testing
     //armMotorFollow.set(y*0.25); //^

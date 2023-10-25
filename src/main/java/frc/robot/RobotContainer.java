@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.commands.DrivetrainCommands.ZeroGyro;
 import frc.robot.commands.ElevatorCommands.ElevatorResetEncoder;
+import frc.robot.commands.ElevatorCommands.Music;
 import frc.robot.commands.IntakeCommands.IntakeMotorGo;
 import frc.robot.commands.IntakeCommands.IntakeMotorStop;
 import frc.robot.commands.IntakeCommands.ScoreWithTrigger;
@@ -100,12 +101,15 @@ private final XboxController xboxController0 = new XboxController(0);
   
     // Configure the button bindings
 
-    
+
+
+    SmartDashboard.putData("Play music", new Music(m_elevator, "song1.chrp"));
+    //"C:\\Users\\jderr\\OneDrive\\Documents\\Lakerbots2023\\Lakerbots2023\\src\\main\\deploy\\output.chrp"
     SmartDashboard.putData("Reset ElevatorEncoder", new ElevatorResetEncoder(m_elevator));
     SmartDashboard.putData("ScoreHighCubeFast :)", new ScoreHighCubePoseFast(m_intake, m_wrist, m_arm, m_elevator));
     SmartDashboard.putData("ScoreHighCONEFast >:)", new ScoreHighConePoseFast(m_intake, m_wrist, m_arm, m_elevator));
     SmartDashboard.putData("SHOOT DA CUBE", new IntakeMotorGo(m_intake, -1));
-    SmartDashboard.putData("DriveToTarget", new DriveToTarget(m_drivetrain, m_drivetrain.getPose(), new Pose2d(new Translation2d(3,3), new Rotation2d(0)), 0.3));
+    SmartDashboard.putData("DriveToTarget", new DriveToTarget(m_drivetrain, m_drivetrain.getPose(), new Pose2d(new Translation2d(1,0), new Rotation2d(0)), 0.9));
     //SmartDashboard.putData("reset odometry", new ResetOdometry(m_drivetrain));
 
 
@@ -138,6 +142,7 @@ private final XboxController xboxController0 = new XboxController(0);
     
         
     // Configure autonomous sendable chooser
+
       
     m_chooser.setDefaultOption("HighCubeTaxiThenEngage", new HighCubeAndTaxiThenEngage(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
     m_chooser.addOption("HighCube", new HighCube(m_intake, m_wrist, m_arm, m_elevator, m_drivetrain, m_leds));
