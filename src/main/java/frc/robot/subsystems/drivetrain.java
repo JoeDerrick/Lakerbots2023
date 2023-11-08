@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.function.ToDoubleFunction;
 
@@ -42,7 +43,7 @@ public class drivetrain extends SubsystemBase {
     private PIDController m_ThetaPid;
     public double setPoint;
     public double[] Speeds = {0,0};
-    public double IZone = 0.5;
+    public double IZone = 0.7;
 
     private double m_driveToTargetTolerance = Constants.Swerve.DriveToTargetTolerance;
 
@@ -50,11 +51,13 @@ public class drivetrain extends SubsystemBase {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
-        m_XPid = new PIDController(2.4, 0.001, 0);
-        m_YPid = new PIDController(2.4, 0.001, 0);
-        m_ThetaPid = new PIDController(0.01, 0, 0);
+        m_XPid = new PIDController(4.25, 0.001, 0);
+        m_YPid = new PIDController(4.25, 0.001, 0);
+        m_ThetaPid = new PIDController(0.08, 0, 0);
         m_XPid.setIntegratorRange(-IZone, IZone);
         m_YPid.setIntegratorRange(-IZone, IZone);
+        m_ThetaPid.setIntegratorRange(-IZone, IZone);
+        
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -147,6 +150,8 @@ public class drivetrain extends SubsystemBase {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//FOLLOWING SECTION NOT USED
+//ALL METHODS PREFACED WITH THE WORD CHAOS ARE NOT USED
 ///----------------------------- Following section is for odometry------------------------------------
 /// most of this code is from 131 CHAOS (thanks btw)
 //added 9/13/23
@@ -192,6 +197,7 @@ public class drivetrain extends SubsystemBase {
 
     //pose getter
     //pose is a x y and theta position
+    //WE USE THIS METHOD
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
     }
@@ -232,24 +238,29 @@ public class drivetrain extends SubsystemBase {
 
 //new pid code by me
 
-public void setSetpoint(double x, double y){
+public void setSetpoint(double x, double y, double th){
     m_XPid.setSetpoint(x);
     m_YPid.setSetpoint(y);
+    m_ThetaPid.setSetpoint(th);
+
 }
 
-public double[] getSpeeds(double currentX, double currentY){
+public double[] getSpeeds(double currentX, double currentY, double currentTheta){
+    double[] Speeds = {0,0,0};
     Speeds[0] = m_XPid.calculate(currentX);
     Speeds[1] = m_YPid.calculate(currentY);
+    Speeds[2] = m_ThetaPid.calculate(currentTheta);
     return(Speeds);
 }
 
 public void setTolerence(double t){
     m_XPid.setTolerance(t);
     m_YPid.setTolerance(t);
+    m_ThetaPid.setTolerance(t);
 }
 
 public boolean isAtDesired(){
-    if(m_XPid.atSetpoint() && m_YPid.atSetpoint()){
+    if(m_XPid.atSetpoint() && m_YPid.atSetpoint() && m_ThetaPid.atSetpoint()){
         return true;
     }
     else{
@@ -277,6 +288,10 @@ public boolean isAtDesired(){
             positions[mod.moduleNumber] = mod.getPosition();
         }
         return positions;
+    }
+
+    public Rotation2d getRotation(){
+        return new Rotation2d(gyro.getYaw()*(Math.PI/180));
     }
 
     public void zeroGyro() {

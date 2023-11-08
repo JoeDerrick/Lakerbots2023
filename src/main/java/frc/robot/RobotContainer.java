@@ -38,6 +38,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.DrivetrainCommands.DriveAmount;
+import frc.robot.commands.DrivetrainCommands.DriveAmountThenDriveToTarget;
 import frc.robot.commands.DrivetrainCommands.DriveToTarget;
 import frc.robot.commands.DrivetrainCommands.DriveWithSlow;
 import frc.robot.commands.DrivetrainCommands.Reset;
@@ -108,8 +110,10 @@ private final XboxController xboxController0 = new XboxController(0);
     SmartDashboard.putData("Reset ElevatorEncoder", new ElevatorResetEncoder(m_elevator));
     SmartDashboard.putData("ScoreHighCubeFast :)", new ScoreHighCubePoseFast(m_intake, m_wrist, m_arm, m_elevator));
     SmartDashboard.putData("ScoreHighCONEFast >:)", new ScoreHighConePoseFast(m_intake, m_wrist, m_arm, m_elevator));
-    SmartDashboard.putData("SHOOT DA CUBE", new IntakeMotorGo(m_intake, -1));
-    SmartDashboard.putData("DriveToTarget", new DriveToTarget(m_drivetrain, m_drivetrain.getPose(), new Pose2d(new Translation2d(1,0), new Rotation2d(0)), 0.9));
+    SmartDashboard.putData("SHOOT DA CUBE", new IntakeMotorGo(m_intake, -1));                                                                           //\/--not used rotation is given seperate from the pose
+    SmartDashboard.putData("DriveToTarget", new DriveToTarget(m_drivetrain, m_drivetrain.getPose(), new Pose2d(new Translation2d(0,0), new Rotation2d(0)), new Rotation2d(Math.toRadians(180))));
+    SmartDashboard.putData("Drive amt drive target", new DriveAmountThenDriveToTarget(m_drivetrain, 0.3, 0.5, new Pose2d(new Translation2d(1.5,0), new Rotation2d(0)), new Rotation2d(Math.toRadians(0))));
+    SmartDashboard.putData("drive amount 20", new DriveAmount(m_drivetrain, 40, 0.3, true));
     //SmartDashboard.putData("reset odometry", new ResetOdometry(m_drivetrain));
 
 
